@@ -1,4 +1,5 @@
 Kotlin
+
 1. Variables
 2. Data Types
 3. Arithmetic & Assignment operator
@@ -9,54 +10,75 @@ Kotlin
 8. Interface
 9. Null Safety
 10. Collections
+
+------------
 1.Variables
+------------
 var vs val
-var -> keyword with which object is declared in koltin but its
-value is changeable.
-val -> keyword with which object is declared whose value
-cannot be changed once defined.
+var -> keyword with which object is declared in koltin but its value is changeable.
+val -> keyword with which object is declared whose value cannot be changed once defined.
+
 Code:
+-----
 var name1= “android”; // var value can be changed
 println(username); // android
 name1=”kotlin”
+
 println(username); //kotlin
 val name2 =”studio”; // final value cannot be changed
 println(name2) //studioname2=”kotlin”; // error by kotlin
+
 2.Data Types:
+------------
 Kotlin class
 Int -> stores Integer value {1,2,3,4,5,6,7,8,9}
 Float -> stores Float value {1.1,1.2,1.5}
 String -> stores String value { “android”,”studio”}
 Boolean -> store true or false
-others are Byte,Short,Long,Double
+Others are Byte,Short,Long,Double
+
 Code:
+
 var i:Int = 10 // integer value
 println("Integer Value is " + i)
+
 val f: Float = 100.00f // float value
 println("Float Value is " + f)
+
 var from : String = "Android" // String value
 println("Name is "+from);
+
 var a:Boolean= true // Boolean value
 println(" A value is"+a);
+
 var b:Boolean= false // Boolean value
-println("B value is "+b);3.Arithmetic & Assignment & Unary Operators
+println("B value is "+b);
+
+-------------------------------------------
+3.Arithmetic & Assignment & Unary Operators
+--------------------------------------------
 + Adds together two values x + y
 - Subtracts one value from another x - y
 * Multiplies two values x * y
 / Divides one value by another x / y
 % Returns the division remainder x % y
 = assigns value x=y
+
 val x: Int = 40
 val y: Int = 20
+
 println("x + y = " + (x + y)) // 60
 println("x - y = " + (x - y)) // 20
 println("x / y = " + (x / y)) // 2
 println("x * y = " + (x * y)) //800
 println("x % y = " + (x % y)) //2
+
 x=y // assigning value of y to x
 println("x = y = " +x); // x= 20
+
 x += 10 // it means x = x+10;
 println("x " +x); 30
+
 Following is a list of all assignment operators:
 Operator Example Expanded Form
 = x = 10 x = 10
@@ -64,6 +86,7 @@ Operator Example Expanded Form
 -= x -= 10 x = x - 10
 *= x *= 10 x = x * 10/= x /= 10 x = x / 10
 %= x %= 10 x = x % 10
+
 Unary Operator:
 Following is a list of all Unary operators:
 + unary plus +x
@@ -71,6 +94,7 @@ Following is a list of all Unary operators:
 ++ increment by 1 ++x
 -- decrement by 1 --x
 ! inverts the value of a boolean !x
+
 Code:
 var x: Int = 40
 var b:Boolean = true
@@ -79,19 +103,22 @@ println("-x = " + (-x))
 println("++x = " + (++x))
 println("--x = " + (--x))
 println("!b = " + (!b))
+
 +x = 40
 -x = -40
 ++x = 41
 --x = 40
-!b = false4.Logical Operators
+!b = false
+
+--------------------
+4.Logical Operators
+---------------------
 Operator Name Description Example
-&& Logical and Returns true if both operands are true
-x && y
-|| Logical or Returns true if either of the operands is
-true x || y
-! Logical not Reverse the result, returns false if the
-operand is true !x
+&& Logical and Returns true if both operands are true x && y
+|| Logical or Returns true if either of the operands is true x || y
+! Logical not Reverse the result, returns false if the operand is true !x
 Code:
+
 var x: Boolean = true
 var y:Boolean = false
 println("x && y = " + (x && y))
@@ -100,17 +127,20 @@ println("!y = " + (!y))
 x && y = false
 x || y = true
 !y = true
+
+-----------------
 5. Control Flow
+------------------
 If-else Statement:
 -----------------------
 Code
 val a:Int = 5
 val b:Int = 2
-var max: Intif (a > b) {
-max = a
-} else {
-max = b
-}
+var max: Int if (a > b) {
+                          max = a
+                        } else {
+                           max = b
+                       }
 println("Maximum of a or b is " +max)
 Output: Maximum of a or b is 5
 When statement:
@@ -120,85 +150,104 @@ when:
 Code;
 val x:Int = 5
 when (x) {
-1 -> println("x = = 1")
-2 -> println("x = = 2")
-else -> { // Note the block
-println("x is neither 1 nor 2")
+  1 -> println("x = = 1")
+  2 -> println("x = = 2")
+  else -> { // Note the block
+    println("x is neither 1 nor 2")
+  }
 }
-}
+
 val x:Int = 5
 when (x) {
-1,2 -> println(" Value of X either 1,2")
-else -> { // Note the blockprintln("x is neither 1 nor 2")
+  1,2 -> println(" Value of X either 1,2")
+  else -> { // Note the blockprintln("x is neither 1 nor 2")
+  }
 }
-}
+
 For loop:
 ------------
 val items = listOf(1, 2, 3, 4)
+
 for(element in items){
-println(element)
+  println(element)
 }
+
 Do while loop:
 ------------------
 var x:Int = 0
 do {
-x = x + 10
-println("I am inside Do block---"+x)
-} while(x <= 50)
+  x = x + 10
+  println("I am inside Do block---"+x)
+  } while(x <= 50)
+
+-------------
 6. Functions:
+--------------
 The function should be declared as follows −
 fun <nameOfFunction> (<argument>:<argumentType>):<ReturnType>
+
 Code: (returns nothing)
 var name =”android”;
-fun printName(x: String){
-println(x);
-}printName(name); // output : android
+fun printName(x: String)  {
+    println(x);
+}
+printName(name); // output : android
+
 Code: (return String)
 var name =”android”;
 fun printName(x: String):String{
-return x;
+  return x;
 }
 println(printName()); // output : android
+
 Code:(Parameterized function)
 val result = sum(5, 6)
 print(result)
 fun sum(number1: Int, number2:Int): Int{
-val add = number1+number2
-return add
+  val add = number1+number2
+  return add
 }
+
 fun main(args: Array<String>) {
-var x:Int = 10
-println("The value of X is--"+doubleMe(x))
+  var x:Int = 10
+  println("The value of X is--"+doubleMe(x))
 }
+
 fun doubleMe(x:Int):Int {
-return 2*x;
+  return 2*x;
 }
-Output: The value of X is--207. Class
+Output: The value of X is--20
+
+---------
+7. Class
+---------
 Class is blueprint that is define by us what to do
 // Class declaration
-Class myClass {
-}
+Class myClass { }
 class myClass {
-// property (data member)
-private var name: String = "android"
-// member function
-fun printMe() {
-println(“you are learning ”+name);
+  // property (data member)
+  private var name: String = "android"
+  // member function
+  fun printMe() {
+    println(“you are learning ”+name);
+  }
 }
-}
+
 How to create object of class:
 val obj = myClass() // create obj object of myClass class
 obj.printMe() // calling method on object
 Nested Class -> class within a class
 ------------------------------------------------
 fun main(args: Array<String>) {
-val demo = Outer.Nested().foo() // calling nested class
-method
-print(demo)}
-class Outer {
-class Nested {
-fun foo() = "Welcome to The TutorialsPoint.com"
+  val demo = Outer.Nested().foo() // calling nested class
+    method
+    print(demo)
 }
+
+class Outer {
+  class Nested {
+    fun foo() = "Welcome to The TutorialsPoint.com"
+  }
 }
 Output: Welcome to The TutorialsPoint.com
 User Defined data Classes
@@ -223,52 +272,60 @@ var obj4 = UserDetail("android",30);
 list.add(obj4);
 list.get(1).age; //24
 list.get(2).age; //26
+
+-------------------------
 8. Inheritance ,Interface
+-------------------------
 Inheritance -> a kotlin class can inherit just one class.
 an open type used to specify the behavior of a class.
 Code:
 open class ABC {
-fun think () {
-print("Hey!! i am thiking ")
+  fun think () {
+    print("Hey!! i am thiking ")
+  }
 }
-}
+
 class BCD: ABC(){ // inheritence happend using default
-constructor
+  constructor
 }
 fun main(args: Array<String>) {
-var a = BCD()
-a.think()
+  var a = BCD()
+  a.think()
 }
+
 Overriding interface methods:----------------------------------------
 Overriding Method:
 -----------------
 open class ABC {
-open fun think () {
-print("Hey!! i am thinking ")
-}
+  open fun think () {
+    print("Hey!! i am thinking ")
+  }
 }
 class BCD: ABC() { // inheritance happens using default
-constructor
-override fun think() {
-print("I Am from Child")
+  constructor
+  override fun think() {
+    print("I Am from Child")
+  }
 }
-}
+
 fun main(args: Array<String>) {
-var a = BCD()
-a.think()
+  var a = BCD()
+  a.think()
 }
+
+----------
 Interface:
+----------
 An Interface in Kotlin programming language is defined as
 A Java interface contains default and abstract methods. A
 class can implement multiple interfaces. In Kotlin, interfaces
 are declared using the open keyword.
 interface ExampleInterface {
-var myVar: String
-// abstract property
-fun absMethod()
-// abstract method
-fun sayHello() = "Hello there" // method with default
-implementation
+    var myVar: String
+    // abstract property
+    fun absMethod()
+    // abstract method
+    fun sayHello() = "Hello there" // method with default implementation
 }interface ExampleInterface {
 var myVar: Int
 // abstract property

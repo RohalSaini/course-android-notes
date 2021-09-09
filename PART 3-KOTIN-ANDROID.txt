@@ -1,0 +1,1312 @@
+--------
+CLASS 1:
+--------
+
+
+class MainActivity : AppCompatActivity(){
+    /*
+    when activity is created first time:
+    -------------------------------------
+    onCreate() -> called when activity is first created.
+    onStart() -> called when activity is becoming visible to the user.
+    onResume() -> called when activity will start interacting with the user.
+
+  when paused(acitvity in background) ->
+  -------------
+    	onStop() -> called when activity is stoped
+
+ when Retart from background:
+    onStart() -> called when activity is becoming visible to the user.
+    onResume() -> called when activity will start interacting with the user.
+ 
+ when activity closed:
+    onStop() -> called when activity is stoped
+    onDestroy() -> called when activity is going to destroy
+
+    
+
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        println("Activity is Created")
+        var button_login = findViewById<Button>(R.id.button_call)
+        button_login.setOnClickListener {
+            var intent = Intent(this,MainActivity2::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        println("Activity is started")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("Activity is resumed")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("Activity is stoped")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("Activity id destroy")
+    }
+}
+
+--------
+CLASS 2:
+--------
+In build.gradle:
+-----------------
+buildFeatures {
+        viewBinding = true
+}
+
+after this Sync it
+
+class MainActivity : AppCompatActivity(){
+    lateinit var binding:ActivityMainBinding  // xml view which you want to show is linked here
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view) // inflating view
+
+	// how to access -> binding(xml).id
+        binding.buttonCall.setOnClickListener {
+            Log.d("Name",binding.editextUsername.text.toString())
+            var intent = Intent(this,MainActivity2::class.java)
+            startActivity(intent)
+        }
+    }
+
+}
+
+XML:
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <Button
+        android:id="@+id/button_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="Call Next Activity"/>
+    <EditText
+        android:id="@+id/editext_username"
+        android:layout_above="@+id/button_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:hint="Enter Name"/>
+</RelativeLayout>
+
+----------
+CLASS 3:
+----------
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    private lateinit var binding: ActivityMainBinding
+    lateinit var radioButton_gender: RadioButton
+    lateinit var countries:Array<String>
+    lateinit var city:String
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        countries = resources.getStringArray(R.array.cities_array)
+        binding.editextCity.onItemSelectedListener= this
+        ArrayAdapter(this,android.R.layout.simple_spinner_item,countries)
+            .also {
+                    adapter ->  binding.editextCity.adapter = adapter
+            }
+
+        binding.buttonLogin.setOnClickListener {
+            var gender= ""
+            var updates = "No"
+            if(binding.checkboxUpdates.isChecked) {
+                updates = "Yes"
+            }
+            val selectedId = binding.radioGroup.checkedRadioButtonId
+            radioButton_gender = findViewById(selectedId)
+            if (selectedId == -1) {
+                Toast.makeText(this, "Please select Gender", Toast.LENGTH_SHORT).show()
+            } else {
+                gender = radioButton_gender.text.toString()
+            }
+            println(" Name : ${binding.editextUsername.text}  \n Password: ${binding.editextPasssword.text}  \n Email : ${binding.editextEmailAddress.text}  \n City: $city \n want updates: $updates \n Gender: $gender")
+            Toast.makeText(this," Name : ${binding.editextUsername.text}  \n Password: ${binding.editextPasssword.text}  \n Email : ${binding.editextEmailAddress.text}  \n City: $city \n want updates: $updates \n Gender: $gender",Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+        this.city = countries[position]
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+}
+
+--------
+CLASS 4:
+--------
+
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    private lateinit var binding: ActivityMainBinding
+    lateinit var radioButton_gender: RadioButton
+    lateinit var countries:Array<String>
+    lateinit var city:String
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        countries = resources.getStringArray(R.array.cities_array)
+        binding.editextCity.onItemSelectedListener= this
+        ArrayAdapter(this,android.R.layout.simple_spinner_item,countries)
+            .also {
+                    adapter ->  binding.editextCity.adapter = adapter
+            }
+
+        binding.buttonLogin.setOnClickListener {
+            var gender= ""
+            var updates = "No"
+            if(binding.checkboxUpdates.isChecked) {
+                updates = "Yes"
+            }
+            val selectedId = binding.radioGroup.checkedRadioButtonId
+            radioButton_gender = findViewById(selectedId)
+            if (selectedId == -1) {
+                Toast.makeText(this, "Please select Gender", Toast.LENGTH_SHORT).show()
+            } else {
+                gender = radioButton_gender.text.toString()
+            }
+            println(" Name : ${binding.editextUsername.text}  \n Password: ${binding.editextPasssword.text}  \n Email : ${binding.editextEmailAddress.text}  \n City: $city \n want updates: $updates \n Gender: $gender")
+            Toast.makeText(this," Name : ${binding.editextUsername.text}  \n Password: ${binding.editextPasssword.text}  \n Email : ${binding.editextEmailAddress.text}  \n City: $city \n want updates: $updates \n Gender: $gender",Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+        this.city = countries[position]
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+}
+
+----------
+CLASS 5:
+---------
+Dependency for FragmentContainerView:
+-------------------------------------
+dependencies {
+    def fragment_version = "1.3.6"
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+}
+
+class MainActivity : AppCompatActivity(){
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+         supportFragmentManager.beginTransaction().replace(R.id.fragment_container_view,DashboardFragment()).commit()
+}
+
+XML:
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:viewBindingIgnore="false">
+    </androidx.fragment.app.FragmentContainerView>
+</RelativeLayout>
+
+
+--
+Dashboard Fragment:
+
+class DashboardFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("message","OnAttach called()")
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+        Log.d("message","OnCreate called()")
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            DashboardFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("message","OnViewCreated called()")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("message","OnDeAttach called()")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("message","OnDestroyView called()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("message","OnDestroy Called()")
+    }
+}
+
+XML:
+
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DashboardFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Dashboard Fragment" />
+
+</FrameLayout>
+
+--------
+CLASS 6:
+--------
+Dependency for FragmentContainerView:
+-------------------------------------
+dependencies {
+    def fragment_version = "1.3.6"
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+}
+
+class MainActivity : AppCompatActivity(){
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+         supportFragmentManager.beginTransaction().replace(R.id.fragment_container_view,DashboardFragment()).commit()
+}
+
+XML:
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:viewBindingIgnore="false">
+    </androidx.fragment.app.FragmentContainerView>
+</RelativeLayout>
+
+
+--
+Dashboard Fragment:
+
+class DashboardFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("message","OnAttach called()")
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+        Log.d("message","OnCreate called()")
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            DashboardFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("message","OnViewCreated called()")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("message","OnDeAttach called()")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("message","OnDestroyView called()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("message","OnDestroy Called()")
+    }
+}
+
+XML:
+
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DashboardFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Dashboard Fragment" />
+
+</FrameLayout>
+
+---------
+CLASS 7:
+---------
+
+import android.os.Parcel
+import android.os.Parcelable
+
+data class UserData(var name: String?, var age:Int, var address: String?):Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readInt(),
+        parcel.readString()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(name)
+        parcel.writeInt(age)
+        parcel.writeString(address)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<UserData> {
+        override fun createFromParcel(parcel: Parcel): UserData {
+            return UserData(parcel)
+        }
+
+        override fun newArray(size: Int): Array<UserData?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
+
+Main Acitivity:
+--------------
+class MainActivity : AppCompatActivity(){
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        // supportFragmentManager.beginTransaction().replace(R.id.fragment_container_view,DashboardFragment()).commit()
+         //
+        binding.buttonLogin.setOnClickListener {
+            var name = binding.editextUsername.text.toString()
+            var age = binding.editextAge.text.toString().toInt()
+            var address = binding.editextAddress.text.toString()
+            var obj = UserData(name = name,age = age, address = address)
+             var intent = Intent(this,MainActivity3::class.java)
+            intent.putExtra("obj",obj)
+            startActivity(intent)
+        }
+    }
+}
+
+
+XML:
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editext_username"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="Enter Username"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editext_age"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editext_username"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="Enter age"
+        android:inputType="number" />
+    <EditText
+        android:id="@+id/editext_address"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editext_age"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="Enter Address"
+        android:inputType="text" />
+
+    <Button
+        android:layout_below="@+id/editext_address"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button_login"
+        android:text="Login"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>
+
+Another Activity:
+----------------
+
+class MainActivity3 : AppCompatActivity() {
+    lateinit var binding:ActivityMain3Binding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMain3Binding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        var user: UserData? = intent.extras?.getParcelable<UserData>("obj")
+        binding.textViewAge.text = user?.age.toString()
+        binding.textViewAddress.text = user?.address
+        binding.textViewUsername.text = user?.name
+    }
+}
+
+XML:
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity3">
+
+    <TextView
+        android:layout_marginTop="100dp"
+        android:text="Username"
+        android:layout_marginStart="50dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_username"/>
+    <TextView
+        android:layout_marginTop="50dp"
+        android:text="Password"
+        android:layout_marginStart="50dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_age"/>
+    <TextView
+        android:layout_marginTop="50dp"
+        android:text="Address"
+        android:layout_marginStart="50dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_address"/>
+</LinearLayout>
+
+--------
+CLASS 8:
+--------
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    def lifecycle_version = "2.4.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    def fragment_version = "1.3.6"
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+
+}
+
+--------
+CLASS 9:
+--------
+
+menu.xml
+--------
+--------
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:iconTint="#000"
+            android:title="Home"
+            android:icon="@drawable/ic_baseline_home_24"/>
+        <item
+            android:id="@+id/nav_dashboard"
+            android:iconTint="#000"
+            android:title="Dashbaord"
+            android:icon="@drawable/ic_baseline_dashboard_24"/>
+        <item
+            android:id="@+id/about_us"
+            android:iconTint="#000"
+            android:title="Log Out"
+            android:icon="@drawable/ic_baseline_logout"/>
+    </group>
+</menu>
+
+
+Content.xml
+-----------
+-----------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/content_layout"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="16dp"
+        android:src="@color/teal_200"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Android Coding"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="#636363"
+        android:id="@+id/right_side_menu"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#636363"/>
+</LinearLayout>
+
+Toolbar.xml:
+-----------
+-----------
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/toolbar"
+    android:padding="10px">
+
+    <ImageView
+        android:padding="5px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:id="@+id/expanded_menu"
+        android:src="@drawable/ic_menu_24"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Android Coding"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#636363"/>
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="5px"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_height="wrap_content"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+Activity_main.xml
+-----------------
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    tools:context=".MainActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background="@color/teal_200">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <include
+                android:id="@+id/layput_toolbar"
+                 layout="@layout/toolbaar"/>
+        </androidx.appcompat.widget.Toolbar>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Home Page"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="300dp"
+        android:id="@+id/nav_view"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"
+        android:layout_gravity="left"
+        app:headerLayout="@layout/content"
+        app:menu="@menu/menu">
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
+
+MainActivity kotlin class:
+--------------------------
+--------------------------
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         // applying navigation listerner
+         binding.navView.setNavigationItemSelectedListener(this)
+         binding.layputToolbar.expandedMenu.setOnClickListener {
+             Log.d("One Id is", "Home button clicked")
+         }
+         binding.layputToolbar.appName.setOnClickListener {
+             Log.d("Two Id is", "app named clicked")
+         }
+         binding.layputToolbar.settings.setOnClickListener {
+             Log.d("three Id is", "setting clicked")
+         }
+         binding.navView.getHeaderView(0).setOnClickListener {
+             Log.d("Header view", " header view clicked")
+         }
+     }
+
+    private fun clickMenu(view: View) {
+        openDrawer(binding.drawerLayout)
+    }
+    private fun Logout(view: View) {
+       closeDrawer(binding.drawerLayout)
+    }
+
+    private fun closeDrawer(drawerLayout: DrawerLayout) {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.END)
+        }
+    }
+
+    private fun openDrawer(drawerLayout: DrawerLayout) {
+        drawerLayout.openDrawer(GravityCompat.START)
+    }
+    private fun logout(mainActivity: MainActivity) {
+                        AlertDialog.Builder(mainActivity)
+                            .setTitle("Logout")
+                            .setMessage("Are you sure you want to LogOut !!")
+                            .setPositiveButton("Yes",DialogInterface.OnClickListener {
+                                    dialog, i ->
+                                            mainActivity.finish()
+                                            exitProcess(0)
+                             })
+                            .setNegativeButton("No",DialogInterface.OnClickListener {
+                                    dialogInterface, i ->
+                                dialogInterface.dismiss()
+                            }).show()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        closeDrawer(binding.drawerLayout)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            binding.navView.menu.getItem(0).itemId -> Toast.makeText(this, "Home Clicked", Toast.LENGTH_LONG).show()
+            binding.navView.menu.getItem(1).itemId -> Toast.makeText(this, "Dashboard Clicked", Toast.LENGTH_LONG).show()
+            binding.navView.menu.getItem(2).itemId -> logout(this)
+        }
+        return true
+    }
+}
+
+themes.xml
+---------
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Demo" parent="Theme.AppCompat.DayNight.NoActionBar">  
+      </style>
+</resources>
+
+----------
+CLASS 10:
+---------
+menu.xml
+--------
+--------
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:iconTint="#000"
+            android:title="Home"
+            android:icon="@drawable/ic_baseline_home_24"/>
+        <item
+            android:id="@+id/nav_dashboard"
+            android:iconTint="#000"
+            android:title="Dashbaord"
+            android:icon="@drawable/ic_baseline_dashboard_24"/>
+        <item
+            android:id="@+id/about_us"
+            android:iconTint="#000"
+            android:title="Log Out"
+            android:icon="@drawable/ic_baseline_logout"/>
+    </group>
+</menu>
+
+
+Content.xml
+-----------
+-----------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/content_layout"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="16dp"
+        android:src="@color/teal_200"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Android Coding"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="#636363"
+        android:id="@+id/right_side_menu"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#636363"/>
+</LinearLayout>
+
+Toolbar.xml:
+-----------
+-----------
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/toolbar"
+    android:padding="10px">
+
+    <ImageView
+        android:padding="5px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:id="@+id/expanded_menu"
+        android:src="@drawable/ic_menu_24"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Android Coding"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#636363"/>
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="5px"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_height="wrap_content"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+Activity_main.xml
+-----------------
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    tools:context=".MainActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background="@color/teal_200">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <include
+                android:id="@+id/layput_toolbar"
+                 layout="@layout/toolbaar"/>
+        </androidx.appcompat.widget.Toolbar>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Home Page"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="300dp"
+        android:id="@+id/nav_view"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"
+        android:layout_gravity="left"
+        app:headerLayout="@layout/content"
+        app:menu="@menu/menu">
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
+
+MainActivity kotlin class:
+--------------------------
+--------------------------
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         // applying navigation listerner
+         binding.navView.setNavigationItemSelectedListener(this)
+         binding.layputToolbar.expandedMenu.setOnClickListener {
+             Log.d("One Id is", "Home button clicked")
+         }
+         binding.layputToolbar.appName.setOnClickListener {
+             Log.d("Two Id is", "app named clicked")
+         }
+         binding.layputToolbar.settings.setOnClickListener {
+             Log.d("three Id is", "setting clicked")
+         }
+         binding.navView.getHeaderView(0).setOnClickListener {
+             Log.d("Header view", " header view clicked")
+         }
+     }
+
+    private fun clickMenu(view: View) {
+        openDrawer(binding.drawerLayout)
+    }
+    private fun Logout(view: View) {
+       closeDrawer(binding.drawerLayout)
+    }
+
+    private fun closeDrawer(drawerLayout: DrawerLayout) {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.END)
+        }
+    }
+
+    private fun openDrawer(drawerLayout: DrawerLayout) {
+        drawerLayout.openDrawer(GravityCompat.START)
+    }
+    private fun logout(mainActivity: MainActivity) {
+                        AlertDialog.Builder(mainActivity)
+                            .setTitle("Logout")
+                            .setMessage("Are you sure you want to LogOut !!")
+                            .setPositiveButton("Yes",DialogInterface.OnClickListener {
+                                    dialog, i ->
+                                            mainActivity.finish()
+                                            exitProcess(0)
+                             })
+                            .setNegativeButton("No",DialogInterface.OnClickListener {
+                                    dialogInterface, i ->
+                                dialogInterface.dismiss()
+                            }).show()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        closeDrawer(binding.drawerLayout)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            binding.navView.menu.getItem(0).itemId -> Toast.makeText(this, "Home Clicked", Toast.LENGTH_LONG).show()
+            binding.navView.menu.getItem(1).itemId -> Toast.makeText(this, "Dashboard Clicked", Toast.LENGTH_LONG).show()
+            binding.navView.menu.getItem(2).itemId -> logout(this)
+        }
+        return true
+    }
+}
+
+themes.xml
+---------
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Demo" parent="Theme.AppCompat.DayNight.NoActionBar">  
+      </style>
+</resources>
+
+------------
+CLASS 10:
+----------
+Main Acitivity:
+
+class MainActivity : AppCompatActivity() {
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         var list: MutableList<UserData> = mutableListOf<UserData>()
+
+         var obj1 = UserData(name = "Android",age = 43,from = "USA")
+         var obj2 = UserData(name = "Android 1",age= 60,from = "LONDON")
+         var obj3 = UserData(name = "Android 3",age= 60,from = "CANADA")
+         var obj4 = UserData(name = "Android 5",age= 56,from = "INDIA")
+
+         list.add(obj1)
+         list.add(obj2)
+         list.add(obj3)
+         list.add(obj4)
+         var adapter = BaseAdapterTemplate(this,list).also {
+             adpater ->  binding.baseAdpater.adapter = adpater
+         }
+     }
+}
+
+XML:
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    tools:context=".MainActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background="@color/teal_200">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <include
+                android:id="@+id/layput_toolbar"
+                 layout="@layout/toolbaar"/>
+        </androidx.appcompat.widget.Toolbar>
+        <ListView
+            android:id="@+id/baseAdpater"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+    </com.google.android.material.appbar.AppBarLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+UserDefine Data class:
+---------------------
+data class UserData (var name:String,var age:Number,var from:String)
+
+Adpater Class:
+class BaseAdapterTemplate(var context:Context,var list:MutableList<com.example.demo.modal.UserData>) : BaseAdapter() {
+
+    // inflate View
+    @SuppressLint("ViewHolder")
+    override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
+        val modifiedView: View =  LayoutInflater.from(context).inflate(R.layout.adapter_layout, viewGroup, false)
+        // setting Values
+
+        // Setting Position
+        var name = modifiedView.findViewById<TextView>(R.id.adpater_number)
+        name.text = (position +1).toString()
+
+        // Setting Name
+        var username = modifiedView.findViewById<TextView>(R.id.adpater_username) as TextView
+        username.text = list[position].name
+
+        // Setting Age as String
+        var age = modifiedView.findViewById<TextView>(R.id.adpater_age) as TextView
+        age.text = list[position].age.toString()
+
+        // Setting from
+        var from = modifiedView.findViewById<TextView>(R.id.adpater_from) as TextView
+        from.text = list[position].from
+
+        return modifiedView
+    }
+
+    //tell about count
+    override fun getCount(): Int {
+        return list.size
+    }
+
+    // tells about item
+    override fun getItem(positon: Int): Any {
+        return  positon
+    }
+
+    // tells about item ID
+    override fun getItemId(positon: Int): Long {
+        return positon.toLong()
+    }
+
+}
+XML for adpater:
+----------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/_20dp"
+    android:background="@color/teal_700"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="UserData:"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:id="@+id/adpater_number"
+        android:textSize="25sp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Username:"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_marginStart="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Name"
+        android:id="@+id/adpater_username"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_marginStart="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Age:"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Age"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:id="@+id/adpater_age"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="from:"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="from"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:id="@+id/adpater_from"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>
+
+---------
+CLASS 11:
+---------

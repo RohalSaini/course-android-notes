@@ -1,0 +1,3077 @@
+  PROJECT NOTES:
+---------
+CLASS 11:
+---------
+import android.content.Context
+import android.database.sqlite.SQLiteOpenHelper
+
+class DataHelperClass(context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "userList"
+    }
+}
+
+---------
+CLASS 12:
+---------
+mport android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+
+class DataHelperClass(context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "userList"
+
+        private const val TABLE_CONTACTS = "contacts"
+
+        private const val KEY_ID = "id"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+    }
+
+    // " CREATE TABLE contacts ( id INTEGER  PRIMARY KEY,  username  TEXT, password  TEXT )"
+    override fun onCreate(db: SQLiteDatabase?) {
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DataHelperClass.TABLE_CONTACTS + "("
+                + DataHelperClass.KEY_ID + " INTEGER PRIMARY KEY," + DataHelperClass.KEY_NAME + " TEXT,"
+                + DataHelperClass.KEY_PASSWORD + " TEXT,"
+                + DataHelperClass.KEY_EMAIL + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        val DROP_TABLE="DROP TABLE IF EXISTS "+DataHelperClass.TABLE_CONTACTS
+        db?.execSQL(DROP_TABLE)
+        // Create tables again
+        onCreate(db)
+    }
+}
+
+---------
+CLASS 13:
+---------
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import com.example.demo.modal.User
+import com.example.demo.modal.UserData
+
+class DataHelperClass(context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+
+        private const val KEY_ID = "id"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+    }
+
+    // " CREATE TABLE contacts ( id INTEGER  PRIMARY KEY,  username  TEXT, password  TEXT )"
+    override fun onCreate(db: SQLiteDatabase?) {
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DataHelperClass.TABLE_CONTACTS + "("
+                + DataHelperClass.KEY_ID + " INTEGER PRIMARY KEY," + DataHelperClass.KEY_NAME + " TEXT,"
+                + DataHelperClass.KEY_PASSWORD + " TEXT,"
+                + DataHelperClass.KEY_EMAIL + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        val DROP_TABLE="DROP TABLE IF EXISTS "+DataHelperClass.TABLE_CONTACTS
+        db?.execSQL(DROP_TABLE)
+        // Create tables again
+        onCreate(db)
+    }
+    // code to add the new contact
+    fun addUser(user:User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DataHelperClass.KEY_NAME, user.username) // Contact Username
+        values.put(DataHelperClass.KEY_EMAIL, user.email)  //  Email address
+        values.put(DataHelperClass.KEY_PASSWORD, user.pasword)  // Password
+
+        // Inserting Row
+        db.insert(DataHelperClass.TABLE_CONTACTS, null, values)
+        //2nd argument is String containing nullColumnHack
+        db.close() // Closing database connection
+    }
+}
+
+UserDefined class:
+-----------------
+-----------------
+data class User(var id:String,var username:String,var pasword:String,var email:String)
+
+
+Main activity:
+-------------
+-------------
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         //creating obj for Database Helper Class
+         val db = DataHelperClass(this)
+         
+         // to add data to tables
+         val obj = User(id="1",username = "AAA",pasword = "1234567",email = "a@yahoo.com")
+         db.addUser(obj)
+    }
+
+}
+
+---------
+CLASS 14:
+----------
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import com.example.demo.modal.User
+import com.example.demo.modal.UserData
+
+class DataHelperClass(context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+
+        private const val KEY_ID = "id"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+    }
+
+    // " CREATE TABLE contacts ( id INTEGER  PRIMARY KEY,  username  TEXT, password  TEXT )"
+    override fun onCreate(db: SQLiteDatabase?) {
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DataHelperClass.TABLE_CONTACTS + "("
+                + DataHelperClass.KEY_ID + " INTEGER PRIMARY KEY," + DataHelperClass.KEY_NAME + " TEXT,"
+                + DataHelperClass.KEY_PASSWORD + " TEXT,"
+                + DataHelperClass.KEY_EMAIL + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        val DROP_TABLE="DROP TABLE IF EXISTS "+DataHelperClass.TABLE_CONTACTS
+        db?.execSQL(DROP_TABLE)
+        // Create tables again
+        onCreate(db)
+    }
+    // code to add the new contact
+    fun addUser(user:User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DataHelperClass.KEY_NAME, user.username) // Contact Username
+        values.put(DataHelperClass.KEY_EMAIL, user.email)  //  Email address
+        values.put(DataHelperClass.KEY_PASSWORD, user.pasword)  // Password
+
+        // Inserting Row
+        db.insert(DataHelperClass.TABLE_CONTACTS, null, values)
+        //2nd argument is String containing nullColumnHack
+        db.close() // Closing database connection
+    }
+
+    val usersCount: Int
+        get() {
+            val countQuery = "SELECT  * FROM ${DataHelperClass.TABLE_CONTACTS}"
+            val db = this.readableDatabase
+            val cursor: Cursor = db.rawQuery(countQuery, null)
+            //cursor.close()
+
+            // return count
+            return cursor.count
+        }
+
+  }
+
+UserDefined class:
+-----------------
+-----------------
+data class User(var id:String,var username:String,var pasword:String,var email:String)
+
+
+Main activity:
+-------------
+-------------
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         //creating obj for Database Helper Class
+         val db = DataHelperClass(this)
+
+         //db.addUser()
+         val obj = User(id="2",username = "BBB",pasword = "123456790",email = "b@yahoo.com")
+         db.addUser(obj)
+
+         // get user count
+         var count = db.usersCount
+         Log.d("Table Data count: ",count.toString() )
+
+     }
+}
+
+---------
+CLASS 15:
+---------
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import com.example.demo.modal.User
+import com.example.demo.modal.UserData
+
+class DataHelperClass(context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+
+        private const val KEY_ID = "id"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+    }
+
+    // " CREATE TABLE contacts ( id INTEGER  PRIMARY KEY,  username  TEXT, password  TEXT )"
+    override fun onCreate(db: SQLiteDatabase?) {
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DataHelperClass.TABLE_CONTACTS + "("
+                + DataHelperClass.KEY_ID + " INTEGER PRIMARY KEY," + DataHelperClass.KEY_NAME + " TEXT,"
+                + DataHelperClass.KEY_PASSWORD + " TEXT,"
+                + DataHelperClass.KEY_EMAIL + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        val DROP_TABLE="DROP TABLE IF EXISTS "+DataHelperClass.TABLE_CONTACTS
+        db?.execSQL(DROP_TABLE)
+        // Create tables again
+        onCreate(db)
+    }
+    // code to add the new contact
+    fun addUser(user:User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DataHelperClass.KEY_NAME, user.username) // Contact Username
+        values.put(DataHelperClass.KEY_EMAIL, user.email)  //  Email address
+        values.put(DataHelperClass.KEY_PASSWORD, user.pasword)  // Password
+
+        // Inserting Row
+        db.insert(DataHelperClass.TABLE_CONTACTS, null, values)
+        //2nd argument is String containing nullColumnHack
+        db.close() // Closing database connection
+    }
+
+    val usersCount: Int
+        get() {
+            val countQuery = "SELECT  * FROM ${DataHelperClass.TABLE_CONTACTS}"
+            val db = this.readableDatabase
+            val cursor: Cursor = db.rawQuery(countQuery, null)
+            //cursor.close()
+
+            // return count
+            return cursor.count
+        }
+
+    fun deleteAllUser():Unit {
+        val db = this.writableDatabase
+        db.execSQL("delete from ${DataHelperClass.TABLE_CONTACTS}")
+    }
+
+UserDefined class:
+-----------------
+-----------------
+data class User(var id:String,var username:String,var pasword:String,var email:String)
+
+
+Main activity:
+-------------
+-------------
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         //creating obj for Database Helper Class
+         val db = DataHelperClass(this)
+
+         //db.addUser()
+         val obj = User(id="2",username = "BBB",pasword = "123456790",email = "b@yahoo.com")
+         db.addUser(obj)
+
+         // get user count
+         var count = db.usersCount
+         Log.d("Table Data count: ",count.toString() )
+
+         // delete all rows
+         db.deleteAllUser()
+
+         // get user count
+         count = db.usersCount
+         Log.d("Table Data count: ",count.toString() )
+     }
+}
+    
+
+-----------
+CLASS 16:   
+-----------
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import com.example.demo.modal.User
+import com.example.demo.modal.UserData
+
+class DataHelperClass(context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+
+        private const val KEY_ID = "id"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+    }
+
+    // " CREATE TABLE contacts ( id INTEGER  PRIMARY KEY,  username  TEXT, password  TEXT )"
+    override fun onCreate(db: SQLiteDatabase?) {
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DataHelperClass.TABLE_CONTACTS + "("
+                + DataHelperClass.KEY_ID + " INTEGER PRIMARY KEY," + DataHelperClass.KEY_NAME + " TEXT,"
+                + DataHelperClass.KEY_PASSWORD + " TEXT,"
+                + DataHelperClass.KEY_EMAIL + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        val DROP_TABLE="DROP TABLE IF EXISTS "+DataHelperClass.TABLE_CONTACTS
+        db?.execSQL(DROP_TABLE)
+        // Create tables again
+        onCreate(db)
+    }
+    // code to add the new contact
+    fun addUser(user:User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DataHelperClass.KEY_NAME, user.username) // Contact Username
+        values.put(DataHelperClass.KEY_EMAIL, user.email)  //  Email address
+        values.put(DataHelperClass.KEY_PASSWORD, user.pasword)  // Password
+
+        // Inserting Row
+        db.insert(DataHelperClass.TABLE_CONTACTS, null, values)
+        //2nd argument is String containing nullColumnHack
+        db.close() // Closing database connection
+    }
+
+    val usersCount: Int
+        get() {
+            val countQuery = "SELECT  * FROM ${DataHelperClass.TABLE_CONTACTS}"
+            val db = this.readableDatabase
+            val cursor: Cursor = db.rawQuery(countQuery, null)
+            //cursor.close()
+
+            // return count
+            return cursor.count
+        }
+
+    fun deleteAllUser():Unit {
+        val db = this.writableDatabase
+        db.execSQL("delete from ${DataHelperClass.TABLE_CONTACTS}")
+    }
+
+    val allUsers: List<User>
+        get() {
+            val list: MutableList<User> = ArrayList<User>()
+            // Select All Query
+            val selectQuery = "SELECT  * FROM ${DataHelperClass.TABLE_CONTACTS}"
+            val db = this.writableDatabase
+            val cursor: Cursor = db.rawQuery(selectQuery, null)
+
+            /*
+            * table
+            *  row -> 1 id ,username,password,email
+            *  row -> 2 id ,username,password,email
+            *  row -> 3 id ,username,password,email
+            * */
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("cursor pointer at 3 : ${cursor.getString(3)}")
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val contact = User(id = cursor.getString(0), username= cursor.getString(1), pasword = cursor.getString(2),email = cursor.getString(3) )
+                    // Adding contact to list
+                    list.add(contact)
+                } while (cursor.moveToNext())
+            }
+
+            // return contact list
+            return list
+        }
+UserDefined class:
+-----------------
+-----------------
+data class User(var id:String,var username:String,var pasword:String,var email:String)
+
+
+Main activity:
+-------------
+-------------
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         //creating obj for Database Helper Class
+         val db = DataHelperClass(this)
+
+         //db.addUser()
+         val obj = User(id="2",username = "BBB",pasword = "123456790",email = "b@yahoo.com")
+         db.addUser(obj)
+
+         // get user count
+         var count = db.usersCount
+         Log.d("Table Data count: ",count.toString() )
+
+         // get All Users
+         var users:List<User> = db.allUsers
+
+         /* users
+         * 0 -> User -> id,username,password,email
+         * 1 -> User -> id,username,password,email
+         * 2 -> User -> id,username,password,email
+         * 3 -> User -> id,username,password,email
+         * */
+         for (user in users) {
+             val log = "Id: " + user.id+ " ,Name: " + user.username+ " ,Email: " +
+                     user.email + " ,Password: "+user.pasword
+             // Writing Contacts to log
+             Log.d("User: ", log)
+         }
+         // delete all rows
+         db.deleteAllUser()
+
+         // get user count
+         count = db.usersCount
+         Log.d("Table Data count: ",count.toString() )
+    }
+
+}
+
+----------
+CLASS 17:
+----------
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import com.example.demo.modal.User
+import com.example.demo.modal.UserData
+
+class DataHelperClass(context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+
+        private const val KEY_ID = "id"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+    }
+
+    // " CREATE TABLE contacts ( id INTEGER  PRIMARY KEY,  username  TEXT, password  TEXT )"
+    override fun onCreate(db: SQLiteDatabase?) {
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DataHelperClass.TABLE_CONTACTS + "("
+                + DataHelperClass.KEY_ID + " INTEGER PRIMARY KEY," + DataHelperClass.KEY_NAME + " TEXT,"
+                + DataHelperClass.KEY_PASSWORD + " TEXT,"
+                + DataHelperClass.KEY_EMAIL + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        val DROP_TABLE="DROP TABLE IF EXISTS "+DataHelperClass.TABLE_CONTACTS
+        db?.execSQL(DROP_TABLE)
+        // Create tables again
+        onCreate(db)
+    }
+    // code to add the new contact
+    fun addUser(user:User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DataHelperClass.KEY_NAME, user.username) // Contact Username
+        values.put(DataHelperClass.KEY_EMAIL, user.email)  //  Email address
+        values.put(DataHelperClass.KEY_PASSWORD, user.pasword)  // Password
+
+        // Inserting Row
+        db.insert(DataHelperClass.TABLE_CONTACTS, null, values)
+        //2nd argument is String containing nullColumnHack
+        db.close() // Closing database connection
+    }
+
+    val usersCount: Int
+        get() {
+            val countQuery = "SELECT  * FROM ${DataHelperClass.TABLE_CONTACTS}"
+            val db = this.readableDatabase
+            val cursor: Cursor = db.rawQuery(countQuery, null)
+            //cursor.close()
+
+            // return count
+            return cursor.count
+        }
+
+    fun deleteAllUser():Unit {
+        val db = this.writableDatabase
+        db.execSQL("delete from ${DataHelperClass.TABLE_CONTACTS}")
+    }
+
+    val allUsers: List<User>
+        get() {
+            val list: MutableList<User> = ArrayList<User>()
+            // Select All Query
+            val selectQuery = "SELECT  * FROM ${DataHelperClass.TABLE_CONTACTS}"
+            val db = this.writableDatabase
+            val cursor: Cursor = db.rawQuery(selectQuery, null)
+
+            /*
+            * table
+            *  row -> 1 id ,username,password,email
+            *  row -> 2 id ,username,password,email
+            *  row -> 3 id ,username,password,email
+            * */
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("cursor pointer at 3 : ${cursor.getString(3)}")
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val contact = User(id = cursor.getString(0), username= cursor.getString(1), pasword = cursor.getString(2),email = cursor.getString(3) )
+                    // Adding contact to list
+                    list.add(contact)
+                } while (cursor.moveToNext())
+            }
+
+            // return contact list
+            return list
+        }
+       fun getUser(id: Int): User? {
+        val db = this.readableDatabase
+        val cursor: Cursor? = db.query(
+            DataHelperClass.TABLE_CONTACTS,
+            arrayOf(
+                DataHelperClass.KEY_ID,
+                DataHelperClass.KEY_NAME,
+                DataHelperClass.KEY_EMAIL,
+                DataHelperClass.KEY_PASSWORD
+            ),
+            "${DataHelperClass.KEY_ID}=?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null,
+            null
+        )
+        if (cursor != null) cursor.moveToFirst()
+        // return contact
+
+        val user = cursor?.let {
+            User(
+                id=cursor.getString(0),
+                username = cursor.getString(1),
+                email = cursor.getString(2),
+                pasword=cursor.getString(3)
+            )
+        }
+        return  user
+ }
+UserDefined class:
+-----------------
+-----------------
+data class User(var id:String,var username:String,var pasword:String,var email:String)
+
+
+Main activity:
+-------------
+-------------
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         //creating obj for Database Helper Class
+         val db = DataHelperClass(this)
+
+         //db.addUser()
+         val obj = User(id="2",username = "BBB",pasword = "123456790",email = "b@yahoo.com")
+         db.addUser(obj)
+
+         // get user count
+         var count = db.usersCount
+         Log.d("Table Data count: ",count.toString() )
+
+         // get All Users
+         var users:List<User> = db.allUsers
+
+         /* users
+         * 0 -> User -> id,username,password,email
+         * 1 -> User -> id,username,password,email
+         * 2 -> User -> id,username,password,email
+         * 3 -> User -> id,username,password,email
+         * */
+         for (user in users) {
+             val log = "Id: " + user.id+ " ,Name: " + user.username+ " ,Email: " +
+                     user.email + " ,Password: "+user.pasword
+             // Writing Contacts to log
+             Log.d("User: ", log)
+         }
+
+         // Getting User with id
+         var user: User? = db.getUser(1)
+         Log.d("User at 1 ","Id : ${user?.id} Password: ${user?.pasword}  Email: ${user?.email} Username: ${user?.username}")
+
+         // delete all rows
+         db.deleteAllUser()
+
+         // get user count
+         count = db.usersCount
+         Log.d("Table Data count: ",count.toString() )
+
+    }
+
+}
+
+-----------
+CLASS 18:
+-----------
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
+import com.example.demo.modal.User
+
+class DataHelperClass(context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+
+        private const val KEY_ID = "id"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+    }
+
+    // " CREATE TABLE contacts ( id INTEGER  PRIMARY KEY,  username  TEXT, password  TEXT )"
+    override fun onCreate(db: SQLiteDatabase?) {
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DataHelperClass.TABLE_CONTACTS + "("
+                + DataHelperClass.KEY_ID + " INTEGER PRIMARY KEY," + DataHelperClass.KEY_NAME + " TEXT,"
+                + DataHelperClass.KEY_PASSWORD + " TEXT,"
+                + DataHelperClass.KEY_EMAIL + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        val DROP_TABLE="DROP TABLE IF EXISTS "+DataHelperClass.TABLE_CONTACTS
+        db?.execSQL(DROP_TABLE)
+        // Create tables again
+        onCreate(db)
+    }
+    // code to add the new contact
+    fun addUser(user:User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DataHelperClass.KEY_NAME, user.username) // Contact Username
+        values.put(DataHelperClass.KEY_EMAIL, user.email)  //  Email address
+        values.put(DataHelperClass.KEY_PASSWORD, user.pasword)  // Password
+
+        // Inserting Row
+        db.insert(DataHelperClass.TABLE_CONTACTS, null, values)
+        //2nd argument is String containing nullColumnHack
+        db.close() // Closing database connection
+    }
+
+    val usersCount: Int
+        get() {
+            val countQuery = "SELECT  * FROM ${DataHelperClass.TABLE_CONTACTS}"
+            val db = this.readableDatabase
+            val cursor: Cursor = db.rawQuery(countQuery, null)
+            //cursor.close()
+
+            // return count
+            return cursor.count
+        }
+
+    fun deleteAllUser():Unit {
+        val db = this.writableDatabase
+        db.execSQL("delete from ${DataHelperClass.TABLE_CONTACTS}")
+    }
+
+    val allUsers: List<User>
+        get() {
+            val list: MutableList<User> = ArrayList<User>()
+            // Select All Query
+            val selectQuery = "SELECT  * FROM ${DataHelperClass.TABLE_CONTACTS}"
+            val db = this.writableDatabase
+            val cursor: Cursor = db.rawQuery(selectQuery, null)
+
+            /*
+            * table
+            *  row -> 1 id ,username,password,email
+            *  row -> 2 id ,username,password,email
+            *  row -> 3 id ,username,password,email
+            * */
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("cursor pointer at 3 : ${cursor.getString(3)}")
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val contact = User(id = cursor.getString(0), username= cursor.getString(1), pasword = cursor.getString(2),email = cursor.getString(3) )
+                    // Adding contact to list
+                    list.add(contact)
+                } while (cursor.moveToNext())
+            }
+
+            // return contact list
+            return list
+        }
+    // code to get the single contact
+    fun getUser(id: Int): User? {
+        val db = this.readableDatabase
+        val cursor: Cursor? = db.query(
+            DataHelperClass.TABLE_CONTACTS,
+            arrayOf(
+                DataHelperClass.KEY_ID,
+                DataHelperClass.KEY_NAME,
+                DataHelperClass.KEY_EMAIL,
+                DataHelperClass.KEY_PASSWORD
+            ),
+            "${DataHelperClass.KEY_ID}=?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null,
+            null
+        )
+        if (cursor != null) cursor.moveToFirst()
+        // return contact
+
+        val user = cursor?.let {
+            User(
+                id=cursor.getString(0),
+                username = cursor.getString(1),
+                email = cursor.getString(2),
+                pasword=cursor.getString(3)
+            )
+        }
+        return  user
+    }
+    fun updateUser(user: User): Int {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DataHelperClass.KEY_NAME, user.username) // Contact Username
+        values.put(DataHelperClass.KEY_EMAIL, user.email)  //  Email address
+        values.put(DataHelperClass.KEY_PASSWORD, user.pasword)  // Password
+
+        // updating row
+        return db.update(
+            DataHelperClass.TABLE_CONTACTS,
+            values,
+            "${DataHelperClass.KEY_ID} = ?",
+            arrayOf(user.id)
+        )
+    }
+
+    // Deleting single contact
+    fun deleteUser(user: User?) {
+        val db = this.writableDatabase
+        db.delete(DataHelperClass.TABLE_CONTACTS, "${DataHelperClass.KEY_ID} = ?", arrayOf(user?.id))
+        Log.d("User Deleted","User Deleted")
+        db.close()
+    }// return count
+}
+
+UserDefined class:
+-----------------
+-----------------
+data class User(var id:String,var username:String,var pasword:String,var email:String)
+
+
+Main activity:
+-------------
+-------------
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var binding:ActivityMainBinding
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         //creating obj for Database Helper Class
+         val db = DataHelperClass(this)
+
+         //db.addUser()
+         val obj = User(id="2",username = "BBB",pasword = "123456790",email = "b@yahoo.com")
+         db.addUser(obj)
+
+         // get user count
+         var count = db.usersCount
+         Log.d("Table Data count: ",count.toString() )
+
+         // get All Users
+         var users:List<User> = db.allUsers
+
+         /* users
+         * 0 -> User -> id,username,password,email
+         * 1 -> User -> id,username,password,email
+         * 2 -> User -> id,username,password,email
+         * 3 -> User -> id,username,password,email
+         * */
+         for (user in users) {
+             val log = "Id: " + user.id+ " ,Name: " + user.username+ " ,Email: " +
+                     user.email + " ,Password: "+user.pasword
+             // Writing Contacts to log
+             Log.d("User: ", log)
+         }
+
+         // Getting User with id
+         var user: User? = db.getUser(1)
+         Log.d("User at 1 ","Id : ${user?.id} Password: ${user?.pasword}  Email: ${user?.email} Username: ${user?.username}")
+
+         // Updating
+         user?.username =" AAAA"
+         user?.email ="aaa@aa.com"
+         user?.pasword =" 12345678907755454554"
+
+         if (user != null) {
+             db.updateUser(user)
+         }
+
+         // Getting User with id
+         user = db.getUser(1)
+         Log.d("User Update at 1 ","Id : ${user?.id} Password: ${user?.pasword}  Email: ${user?.email} Username: ${user?.username}")
+
+         db.deleteUser(user = user )
+         // delete all rows
+         db.deleteAllUser()
+
+         // get user count
+         count = db.usersCount
+         Log.d("Table Data count: ",count.toString() )
+    }
+
+}
+--------
+CLASS 20:
+---------
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import com.example.demo.databinding.ActivityLoginBinding
+import com.example.demo.databinding.ActivityMainBinding
+
+class LoginActivity : AppCompatActivity() {
+    lateinit var binding: ActivityLoginBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        settingOnClickListener()
+    }
+
+    private fun settingOnClickListener() {
+        binding.editextEmailAddress.setOnClickListener {
+            binding.editextPasssword.requestFocus()
+        }
+        binding.editextPasssword.setOnClickListener {
+            hideKeyboard(it)
+            binding.btnLogin.requestFocus()
+        }
+        binding.btnLogin.setOnClickListener {
+            if(ValidationChecking()) {
+                var email = binding.editextEmailAddress.text.trim()
+                var password = binding.editextPasssword.text.trim()
+                callToActivity()
+            }
+        }
+
+        binding.registerHere.setOnClickListener {
+            var intent = Intent(this,MainActivity2::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun callToActivity() {
+        var intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun ValidationChecking() :Boolean{
+        if (binding.editextEmailAddress.text.trim().isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.editextEmailAddress.text.trim()).matches()) {
+            Toast.makeText(this,"Enter valid email address",Toast.LENGTH_LONG).show()
+            return  false;
+        }
+        if(binding.editextPasssword.text.trim().isBlank() || binding.editextPasssword.text.isNullOrEmpty() ) {
+            Toast.makeText(this,"Enter Password ",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+    private fun hideKeyboard(v: View) {
+        val inputMethodManager:InputMethodManager= getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(v.applicationWindowToken, 0)
+    }
+}
+
+--------
+CLASS 21:
+---------
+package com.example.demo
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
+import com.example.demo.databinding.ActivityMain2Binding
+import com.example.demo.databinding.ActivityMainBinding
+
+class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    private lateinit var binding: ActivityMain2Binding
+    lateinit var radioButton_gender: RadioButton
+    lateinit var countries:Array<String>
+    lateinit var city:String
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMain2Binding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        countries = resources.getStringArray(R.array.cities_array)
+        binding.editextCity.onItemSelectedListener= this
+
+        ArrayAdapter(this,android.R.layout.simple_spinner_item,countries)
+            .also {
+                    adapter ->  binding.editextCity.adapter = adapter
+            }
+
+        binding.buttonLogin.setOnClickListener {
+            if(ValidationChecking()) {
+                var gender= ""
+                var updates = "No"
+                if(binding.checkboxUpdates.isChecked) {
+                    updates = "Yes"
+                }
+                val selectedId = binding.radioGroup.checkedRadioButtonId
+                radioButton_gender = findViewById(selectedId)
+                if (selectedId == -1) {
+                    Toast.makeText(this, "Please select Gender", Toast.LENGTH_SHORT).show()
+                } else {
+                    gender = radioButton_gender.text.toString()
+                }
+                println(" Name : ${binding.editextUsername.text}  \n Password: ${binding.editextPasssword.text}  \n Email : ${binding.editextEmailAddress.text}  \n City: $city \n want updates: $updates \n Gender: $gender")
+                Toast.makeText(this," Name : ${binding.editextUsername.text}  \n Password: ${binding.editextPasssword.text}  \n Email : ${binding.editextEmailAddress.text}  \n City: $city \n want updates: $updates \n Gender: $gender",Toast.LENGTH_LONG).show()
+                //callingFragment()
+                callingToAvtivity()
+            }
+        }
+
+        binding.editextUsername.setOnClickListener {
+            binding.editextPasssword.requestFocus()
+        }
+        binding.editextPasssword.setOnClickListener {
+            binding.editextEmailAddress.requestFocus()
+        }
+        binding.editextEmailAddress.setOnClickListener {
+            hideKeyboard(it)
+            binding.editextCity.requestFocus()
+        }
+        binding.checkboxUpdates.setOnClickListener {
+            binding.radioMale.requestFocus()
+        }
+        binding.radioMale.setOnClickListener {
+            binding.buttonLogin.requestFocus()
+        }
+        binding.radioFemale.setOnClickListener {
+            binding.buttonLogin.requestFocus()
+        }
+    }
+
+    private fun callingToAvtivity() {
+        var intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+        this.city = countries[position]
+        binding.checkboxUpdates.requestFocus()
+    }
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        this.city= countries[0]
+        binding.checkboxUpdates.requestFocus()
+    }
+
+    private fun hideKeyboard(v: View) {
+        val inputMethodManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(v.applicationWindowToken, 0)
+    }
+    private fun ValidationChecking() :Boolean{
+        if (binding.editextUsername.text.trim().isEmpty() || binding.editextUsername.text.trim().length<5) {
+            Toast.makeText(this,"Enter username with minimum 5 character",Toast.LENGTH_LONG).show()
+            return  false;
+        }
+        if(binding.editextPasssword.text.trim().isBlank() || binding.editextPasssword.text.isNullOrEmpty() ) {
+            Toast.makeText(this,"Enter Password ",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if(binding.editextEmailAddress.text.trim().isBlank() || binding.editextEmailAddress.text.trim().isNullOrEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.editextEmailAddress.text.trim()).matches()) {
+            Toast.makeText(this,"Enter valid email Adreess ",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+}
+
+---------
+CLASS 22:
+---------
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setCancelable(false)
+        builder.setMessage("Do you want to Exit?")
+        builder.setPositiveButton("Yes") { dialog, which -> //if user pressed "yes", then he is allowed to exit from application
+            finishAffinity()
+        }
+        builder.setNegativeButton("No") { dialog, which -> //if user select "No", just cancel this dialog and continue with app
+            dialog.cancel()
+        }.create().show()
+    }
+    
+---------    
+CLASS 24:
+---------
+
+DbHelper Class:
+--------------
+--------------
+class DbHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+
+        private const val KEY_ID = "id"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+    }
+
+    // " CREATE TABLE contacts ( id INTEGER  PRIMARY KEY,  username  TEXT, password  TEXT )"
+    override fun onCreate(db: SQLiteDatabase?) {
+        createTable()
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        toDeletetable()
+        createTable()
+    }
+    // code to add the new contact
+    fun addUser(user:User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DbHelper.KEY_NAME, user.username) // Contact Username
+        values.put(DbHelper.KEY_EMAIL, user.email)  //  Email address
+        values.put(DbHelper.KEY_PASSWORD, user.pasword)  // Password
+
+        // Inserting Row
+        db.insert(DbHelper.TABLE_CONTACTS, null, values)
+        //2nd argument is String containing nullColumnHack
+        db.close() // Closing database connection
+    }
+
+    val usersCount: Int
+        get() {
+            val countQuery = "SELECT  * FROM ${DbHelper.TABLE_CONTACTS}"
+            val db = this.readableDatabase
+            val cursor: Cursor = db.rawQuery(countQuery, null)
+            //cursor.close()
+
+            // return count
+            return cursor.count
+        }
+
+    fun deleteAllUser():Unit {
+        val db = this.writableDatabase
+        db.execSQL("delete from ${DbHelper.TABLE_CONTACTS}")
+    }
+
+    val allUsers: List<User>
+        get() {
+            val list: MutableList<User> = ArrayList<User>()
+            // Select All Query
+            val selectQuery = "SELECT  * FROM ${DbHelper.TABLE_CONTACTS}"
+            val db = this.writableDatabase
+            val cursor: Cursor = db.rawQuery(selectQuery, null)
+
+            /*
+            * table
+            *  row -> 1 id ,username,password,email
+            *  row -> 2 id ,username,password,email
+            *  row -> 3 id ,username,password,email
+            * */
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val contact = User("1", username= cursor.getString(1), pasword = cursor.getString(2),email = cursor.getString(0) )
+                    // Adding contact to list
+                    list.add(contact)
+                } while (cursor.moveToNext())
+            }
+
+            // return contact list
+            return list
+        }
+    // code to get the single contact
+    fun getUser(email: String): User? {
+        val db = this.readableDatabase
+        val cursor: Cursor? = db.query(
+            DbHelper.TABLE_CONTACTS,
+            arrayOf(
+                DbHelper.KEY_EMAIL,
+                DbHelper.KEY_NAME,
+                DbHelper.KEY_PASSWORD
+            ),
+            "${DbHelper.KEY_EMAIL}=?",
+            arrayOf(email.toString()),
+            null,
+            null,
+            null,
+            null
+        )
+        if (cursor != null)
+            cursor.moveToFirst()
+        // return contact
+        println("+++++++++++++++++++++++++++++++++++++++++++++")
+        println(" GET USER NAME : $email")
+        println("+++++++++++++++++++++++++++++++++++++++++++++")
+        println("cursor pointer at 0 : ${cursor?.getString(0)}")
+        println("cursor pointer at 1 : ${cursor?.getString(1)}")
+        println("cursor pointer at 2 : ${cursor?.getString(2)}")
+        println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+        val user = cursor?.let {
+            User(
+                id= "1",
+                email = cursor.getString(0),
+                username = cursor.getString(1),
+                pasword=cursor.getString(2)
+            )
+        }
+        return  user
+    }
+    fun updateUser(user: User): Int {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DbHelper.KEY_NAME, user.username) // Contact Username
+        values.put(DbHelper.KEY_PASSWORD, user.pasword)  // Password
+
+        // updating row
+        return db.update(
+            DbHelper.TABLE_CONTACTS,
+            values,
+            "${DbHelper.KEY_EMAIL} = ?",
+            arrayOf(user.email)
+        )
+    }
+
+    // Deleting single contact
+    fun deleteUser(user: User?) {
+        val db = this.writableDatabase
+        db.delete(DbHelper.TABLE_CONTACTS, "${DbHelper.KEY_EMAIL} = ?", arrayOf(user?.email))
+        Log.d("User Deleted","User Deleted")
+        db.close()
+    }// return count
+
+    fun toDeletetable() {
+        var db = this.writableDatabase
+        db.execSQL("DROP TABLE IF EXISTS "+DbHelper.TABLE_CONTACTS)
+        createTable()
+    }
+
+    fun createTable() {
+        var db = this.writableDatabase
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DbHelper.TABLE_CONTACTS + "("
+                + DbHelper.KEY_EMAIL + " TEXT PRIMARY KEY,"
+                + DbHelper.KEY_NAME + " TEXT,"
+                + DbHelper.KEY_PASSWORD + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+
+        /* create table contacts ( email  TEXT PRIMARY KEY , username TEXT ,password TEXT ) */
+    }
+}
+
+
+Registering User in Database:
+----------------------------
+----------------------------
+class RegistrationActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    private lateinit var binding: ActivityRegistrationBinding
+    lateinit var radioButton_gender: RadioButton
+    lateinit var countries:Array<String>
+    lateinit var city:String
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityRegistrationBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        countries = resources.getStringArray(R.array.cities_array)
+        binding.editextCity.onItemSelectedListener= this
+
+        ArrayAdapter(this,android.R.layout.simple_spinner_item,countries)
+            .also {
+                    adapter ->  binding.editextCity.adapter = adapter
+            }
+
+        binding.buttonLogin.setOnClickListener {
+            if(ValidationChecking()) {
+                var gender= ""
+                var updates = "No"
+                if(binding.checkboxUpdates.isChecked) {
+                    updates = "Yes"
+                }
+                val selectedId = binding.radioGroup.checkedRadioButtonId
+                radioButton_gender = findViewById(selectedId)
+                if (selectedId == -1) {
+                    Toast.makeText(this, "Please select Gender", Toast.LENGTH_SHORT).show()
+                } else {
+                    gender = radioButton_gender.text.toString()
+                }
+                println(" Name : ${binding.editextUsername.text}  \n Password: ${binding.editextPasssword.text}  \n Email : ${binding.editextEmailAddress.text}  \n City: $city \n want updates: $updates \n Gender: $gender")
+                Toast.makeText(this," Name : ${binding.editextUsername.text}  \n Password: ${binding.editextPasssword.text}  \n Email : ${binding.editextEmailAddress.text}  \n City: $city \n want updates: $updates \n Gender: $gender",Toast.LENGTH_LONG).show()
+
+                var obj = User(
+                        id= "undefined",
+                        username = binding.editextUsername.text.trim().toString(),
+                        pasword = binding.editextPasssword.text.trim().toString(),
+                        email = binding.editextEmailAddress.text.trim().toString())
+                InsertIntoDatabase(obj)
+            }
+        }
+
+        binding.editextUsername.setOnClickListener {
+            binding.editextPasssword.requestFocus()
+        }
+        binding.editextPasssword.setOnClickListener {
+            binding.editextEmailAddress.requestFocus()
+        }
+        binding.editextEmailAddress.setOnClickListener {
+            hideKeyboard(it)
+            binding.editextCity.requestFocus()
+        }
+        binding.checkboxUpdates.setOnClickListener {
+            binding.radioMale.requestFocus()
+        }
+        binding.radioMale.setOnClickListener {
+            binding.buttonLogin.requestFocus()
+        }
+        binding.radioFemale.setOnClickListener {
+            binding.buttonLogin.requestFocus()
+        }
+    }
+
+    private fun InsertIntoDatabase(obj: User) {
+        val db = DbHelper(this).addUser(obj)  // creating User in the database
+        // Toast.makeText(this,"User Registered Successfully!!",Toast.LENGTH_LONG).show()
+        callingToAvtivity()
+    }
+
+    private fun callingToAvtivity() {
+        var intent = Intent(this,LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+        this.city = countries[position]
+        binding.checkboxUpdates.requestFocus()
+    }
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        this.city= countries[0]
+        binding.checkboxUpdates.requestFocus()
+    }
+
+    private fun hideKeyboard(v: View) {
+        val inputMethodManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(v.applicationWindowToken, 0)
+    }
+    private fun ValidationChecking() :Boolean{
+        if (binding.editextUsername.text.trim().isEmpty() || binding.editextUsername.text.trim().length<5) {
+            Toast.makeText(this,"Enter username with minimum 5 character",Toast.LENGTH_LONG).show()
+            return  false;
+        }
+        if(binding.editextPasssword.text.trim().isBlank() || binding.editextPasssword.text.isNullOrEmpty() ) {
+            Toast.makeText(this,"Enter Password ",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if(binding.editextEmailAddress.text.trim().isBlank() || binding.editextEmailAddress.text.trim().isNullOrEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.editextEmailAddress.text.trim()).matches()) {
+            Toast.makeText(this,"Enter valid email Adreess ",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+}
+
+---------
+CLASS 25:
+---------
+ binding.btnLogin.setOnClickListener {
+            if(ValidationChecking()) {
+                var email = binding.editextEmailAddress.text.trim()
+                var password = binding.editextPasssword.text.trim()
+                callDbToCheckUser(email,password)
+            }
+        }
+        
+       private fun callDbToCheckUser(email: CharSequence, password: CharSequence) {
+        try {
+            val obj = DbHelper(this).getUser(email = email.toString())
+            if(obj?.pasword == password.toString()) {
+                callToActivity()
+            }
+            Log.d(TAG, "Data is $obj")
+        }catch (exception:Exception) {
+            Log.e(TAG,exception.message.toString())
+        }
+
+        Toast.makeText(this,"User Registered Successfully!!",Toast.LENGTH_LONG).show()
+    }
+    
+---------    
+CLASS 27:
+---------
+class DbHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,null,
+    DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+
+        private const val TABLE_TODOS="todo"
+        private const val KEY_ID = "id"
+        private const val DESCRIPTION = "description"
+        private const val USER_EMAIL = "user_email"
+        private const val JOB_NAME = "job"
+
+
+    }
+    // " CREATE TABLE contacts ( id INTEGER  PRIMARY KEY,  username  TEXT, password  TEXT )"
+    override fun onCreate(db: SQLiteDatabase?) {
+        createTable()
+        createTodoTable()
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        toDeletetable()
+        createTable()
+    }
+    // code to add the new contact
+    fun addUser(user: User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DbHelper.KEY_NAME, user.username) // Contact Username
+        values.put(DbHelper.KEY_EMAIL, user.email)  //  Email address
+        values.put(DbHelper.KEY_PASSWORD, user.pasword)  // Password
+
+        // Inserting Row
+        db.insert(DbHelper.TABLE_CONTACTS, null, values)
+        //2nd argument is String containing nullColumnHack
+        db.close() // Closing database connection
+    }
+
+    val usersCount: Int
+        get() {
+            val countQuery = "SELECT  * FROM ${DbHelper.TABLE_CONTACTS}"
+            val db = this.readableDatabase
+            val cursor: Cursor = db.rawQuery(countQuery, null)
+            //cursor.close()
+
+            // return count
+            return cursor.count
+        }
+
+    fun deleteAllUser():Unit {
+        val db = this.writableDatabase
+        db.execSQL("delete from ${DbHelper.TABLE_CONTACTS}")
+    }
+
+    val allUsers: List<User>
+        get() {
+            val list: MutableList<User> = ArrayList<User>()
+            // Select All Query
+            val selectQuery = "SELECT  * FROM ${DbHelper.TABLE_CONTACTS}"
+            val db = this.writableDatabase
+            val cursor: Cursor = db.rawQuery(selectQuery, null)
+
+            /*
+            * table
+            *  row -> 1 id ,username,password,email
+            *  row -> 2 id ,username,password,email
+            *  row -> 3 id ,username,password,email
+            * */
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val contact = User("1", username= cursor.getString(1), pasword = cursor.getString(2),email = cursor.getString(0) )
+                    // Adding contact to list
+                    list.add(contact)
+                } while (cursor.moveToNext())
+            }
+
+            // return contact list
+            return list
+        }
+    // code to get the single contact
+    fun getUser(email: String): User? {
+        val db = this.readableDatabase
+        val cursor: Cursor? = db.query(
+            DbHelper.TABLE_CONTACTS,
+            arrayOf(
+                DbHelper.KEY_EMAIL,
+                DbHelper.KEY_NAME,
+                DbHelper.KEY_PASSWORD
+            ),
+            "${DbHelper.KEY_EMAIL}=?",
+            arrayOf(email.toString()),
+            null,
+            null,
+            null,
+            null
+        )
+        if (cursor != null)
+            cursor.moveToFirst()
+        // return contact
+        println("+++++++++++++++++++++++++++++++++++++++++++++")
+        println(" GET USER NAME : $email")
+        println("+++++++++++++++++++++++++++++++++++++++++++++")
+        println("cursor pointer at 0 : ${cursor?.getString(0)}")
+        println("cursor pointer at 1 : ${cursor?.getString(1)}")
+        println("cursor pointer at 2 : ${cursor?.getString(2)}")
+        println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+        val user = cursor?.let {
+            User(
+                id= "1",
+                email = cursor.getString(0),
+                username = cursor.getString(1),
+                pasword=cursor.getString(2)
+            )
+        }
+        return  user
+    }
+    fun updateUser(user: User): Int {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DbHelper.KEY_NAME, user.username) // Contact Username
+        values.put(DbHelper.KEY_PASSWORD, user.pasword)  // Password
+
+        // updating row
+        return db.update(
+            DbHelper.TABLE_CONTACTS,
+            values,
+            "${DbHelper.KEY_EMAIL} = ?",
+            arrayOf(user.email)
+        )
+    }
+
+    // Deleting single contact
+    fun deleteUser(user: User?) {
+        val db = this.writableDatabase
+        db.delete(DbHelper.TABLE_CONTACTS, "${DbHelper.KEY_EMAIL} = ?", arrayOf(user?.email))
+        Log.d("User Deleted","User Deleted")
+        db.close()
+    }// return count
+
+    fun toDeletetable() {
+        var db = this.writableDatabase
+        db.execSQL("DROP TABLE IF EXISTS "+DbHelper.TABLE_CONTACTS)
+        //createTable()
+    }
+    fun toDeletetodotable() {
+        var db = this.writableDatabase
+        db.execSQL("DROP TABLE IF EXISTS "+DbHelper.TABLE_TODOS)
+    }
+
+    fun createTable() {
+        var db = this.writableDatabase
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DbHelper.TABLE_CONTACTS + "("
+                + DbHelper.KEY_EMAIL + " TEXT PRIMARY KEY,"
+                + DbHelper.KEY_NAME + " TEXT,"
+                + DbHelper.KEY_PASSWORD + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+
+        /* create table contacts ( email  TEXT PRIMARY KEY , username TEXT ,password TEXT ) */
+    }
+
+    // todo table
+    fun createTodoTable() {
+        var db = this.writableDatabase
+        val CREATE_TODO_TABLE = ("CREATE TABLE " + DbHelper.TABLE_TODOS + "("
+                + DbHelper.KEY_ID + " INTEGER PRIMARY KEY,"
+                + DbHelper.DESCRIPTION + " TEXT,"
+                + DbHelper.JOB_NAME + " TEXT,"
+                + DbHelper.USER_EMAIL + " TEXT" + ")")
+        db?.execSQL(CREATE_TODO_TABLE)
+
+        /* create table todo (id INTEGER PRIMARY KEY  , description TEXT, job TEXT ,user_email TEXT ) */
+    }
+    // code to add the new contact
+    fun addTodo(todo: Todo) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DbHelper.DESCRIPTION, todo.description) // Contact Username
+        values.put(DbHelper.USER_EMAIL, todo.user_email)  //  Email address
+        values.put(DbHelper.JOB_NAME, todo.job)  //  Email address
+
+        // Inserting Row
+        db.insert(DbHelper.TABLE_TODOS, null, values)
+        //2nd argument is String containing nullColumnHack
+        db.close() // Closing database connection
+    }
+    val alltodos: List<Todo>
+        get() {
+            val list: MutableList<Todo> = ArrayList<Todo>()
+            // Select All Query
+            val selectQuery = "SELECT  * FROM ${DbHelper.TABLE_TODOS}"
+            val db = this.writableDatabase
+            val cursor: Cursor = db.rawQuery(selectQuery, null)
+
+            /*
+            * table
+            *  row -> 1 id ,username,password,email
+            *  row -> 2 id ,username,password,email
+            *  row -> 3 id ,username,password,email
+            * */
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("cursor pointer at 3 : ${cursor.getString(3)}")
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val todo = Todo(id = cursor.getString(0), description= cursor.getString(1),user_email = cursor.getString(3) ,job = cursor.getString(2))
+                    // Adding contact to list
+                    list.add(todo)
+                } while (cursor.moveToNext())
+            }
+
+            // return contact list
+            return list
+        }
+}
+
+Calling from Activity:
+
+private fun InsertTodo(des: String, jobName: String) {
+        var db =DbHelper(this)
+        var todo_obj = Todo(user_email = "rohal@yahoo.com",description = des,id = "0",job = jobName)
+
+        db.addTodo(todo_obj)
+        Toast.makeText(this,"Sucessfully todo added!!",Toast.LENGTH_LONG).show()
+        this.finish()
+}
+
+-----------
+CLASS 28:
+----------
+ database user
+     tables -> contacts, todo
+      table -> contacts  :  create table contacts ( email  TEXT PRIMARY KEY , username TEXT ,password TEXT )
+         table -> todo:  create table todo (id INTEGER PRIMARY KEY  , description TEXT, job TEXT ,user_email TEXT ) 
+         
+---------
+CLASS 29:
+----------
+class LoginActivity : AppCompatActivity() {
+    lateinit var binding: ActivityLoginBinding
+    val TAG = "LOGIN ACTIVITY"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        settingOnClickListener()
+        val db = DbHelper(this)
+        Log.d(TAG,"user count is ${db.usersCount}")
+
+        var list:List<User> = db.allUsers
+        for (user in list) {
+            println("username: ${user.username} Password: ${user.pasword} Email : ${user.email}")
+            Log.d(TAG,"username: ${user.username} Password: ${user.pasword} Email : ${user.email}")
+        }
+    }
+
+    private fun settingOnClickListener() {
+        binding.editextEmailAddress.setOnClickListener {
+            binding.editextPasssword.requestFocus()
+        }
+        binding.editextPasssword.setOnClickListener {
+            hideKeyboard(it)
+            binding.btnLogin.requestFocus()
+        }
+        binding.btnLogin.setOnClickListener {
+            if(ValidationChecking()) {
+                var email = binding.editextEmailAddress.text.trim()
+                var password = binding.editextPasssword.text.trim()
+                callDbToCheckUser(email = email,password= password)
+            }
+        }
+
+        binding.registerHere.setOnClickListener {
+            var intent = Intent(this,RegistrationActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun callDbToCheckUser(email: CharSequence, password: CharSequence) {
+        try {
+            val obj = DbHelper(this).getUser(email = email.toString())
+            when {
+                obj == null -> {
+                    Toast.makeText(this,"Wrong email address ",Toast.LENGTH_LONG).show()
+                    return
+                }
+                obj?.pasword != password.toString() -> {
+                    Toast.makeText(this,"Wrong password,Please fill correct password ",Toast.LENGTH_LONG).show()
+                    return
+                }
+                else -> {
+                    callToActivity(obj= obj)
+                    Log.d(TAG, "Data is $obj")
+                }
+            }
+        }catch (exception:Exception) {
+            Log.e(TAG,exception.message.toString())
+        }
+    }
+
+    private fun callToActivity(obj: User) {
+        var intent = Intent(this,DashboardActivity::class.java)
+        intent.putExtra("obj",obj)
+        startActivity(intent)
+    }
+
+    private fun ValidationChecking() :Boolean{
+        if (binding.editextEmailAddress.text.trim().isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.editextEmailAddress.text.trim()).matches()) {
+            Toast.makeText(this,"Enter valid email address",Toast.LENGTH_LONG).show()
+            return  false;
+        }
+        if(binding.editextPasssword.text.trim().isBlank() || binding.editextPasssword.text.isNullOrEmpty() ) {
+            Toast.makeText(this,"Enter Password ",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+}
+
+----------
+CLASS 30: 
+----------
+
+class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    val TAG = "DASHBOARD ACTIVITY"
+    lateinit var binding:ActivityDashboardBinding
+    lateinit var user:User
+    var todoList:List<Todo> = ArrayList<Todo>()
+
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityDashboardBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         // Getting data from parser
+         user = intent.extras?.getParcelable<User>("obj")!!
+
+         binding.navView.setNavigationItemSelectedListener(this)
+         binding.floatAddTodo.setOnClickListener {
+             var intent = Intent(this,TodoAddActivity::class.java)
+                 intent.putExtra("obj",user)
+                 startActivity(intent)
+         }
+         try {
+             var db = DbHelper(this)
+             todoList =db.alltodos
+         } catch (error:Exception){
+            Log.e(TAG,error.message.toString())
+         }
+         if(todoList.isNotEmpty()) {
+             var adapter = BaseAdapter(this, todoList).also {
+                     adpater ->  binding.baseAdpater.adapter = adpater
+             }
+         }
+     }
+
+}
+
+
+BaseAdapter:
+class BaseAdapter(var context:Context, var list:List<Todo>) : BaseAdapter() {
+    @SuppressLint("ViewHolder")
+    override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
+        val modifiedView: View =  LayoutInflater.from(context).inflate(R.layout.adapter_layout, viewGroup, false)
+        // Setting Name
+        val username = modifiedView.findViewById<TextView>(R.id.adpater_username) as TextView
+        username.text = list[position].job
+
+        // Setting from
+        val from = modifiedView.findViewById<TextView>(R.id.adpater_from) as TextView
+        from.text = list[position].description
+
+        return modifiedView
+    }
+
+    override fun getCount(): Int {
+        return list.size
+    }
+
+    override fun getItem(positon: Int): Any {
+        return  positon
+    }
+
+    override fun getItemId(positon: Int): Long {
+        return positon.toLong()
+    }
+}
+
+
+-----------
+CLASS  31: 
+-----------
+class LoginActivity : AppCompatActivity() {
+    lateinit var binding: ActivityLoginBinding
+    val TAG = "LOGIN ACTIVITY"
+    lateinit var db :DbHelper
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+    }
+        binding.btnLogin.setOnClickListener {
+            hideKeyboard(it)
+            if(ValidationChecking()) {
+                var email = binding.editextEmailAddress.text.trim()
+                var password = binding.editextPasssword.text.trim()
+                callDbToCheckUser(email = email,password= password,it)
+            }
+        }
+
+        binding.registerHere.setOnClickListener {
+            var intent = Intent(this,RegistrationActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun callDbToCheckUser(email: CharSequence, password: CharSequence, view: View) {
+        try {
+            val obj = DbHelper(this).getUser(email = email.toString())
+            when {
+                obj == null -> {
+                    Snackbar
+                        .make(view,"Wrong email address", Snackbar.LENGTH_LONG)
+                        .show()
+                }
+                obj.pasword != password.toString() -> {
+                    Snackbar
+                        .make(view,"Wrong password filled, please fill correct one", Snackbar.LENGTH_LONG)
+                        .show(); // Don’t forget to show!
+                }
+                else -> {
+                    callToActivity(obj= obj)
+                    Log.d(TAG, "Data is $obj")
+                }
+            }
+        }catch (exception:Exception) {
+            Log.e(TAG,exception.message.toString())
+            Snackbar
+                .make(view,"Email  is not correct ,Please fill valid email address", Snackbar.LENGTH_LONG)
+                .show(); // Don’t forget to show!
+
+        }
+    }
+
+    private fun callToActivity(obj: User) {
+        var intent = Intent(this,DashboardActivity::class.java)
+        intent.putExtra("obj",obj)
+        startActivity(intent)
+    }
+
+
+}
+
+---------
+CLASS 32:
+---------
+class DbHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,null,DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+
+        private const val TABLE_TODOS="todo"
+        private const val KEY_ID = "id"
+        private const val DESCRIPTION = "description"
+        private const val USER_EMAIL = "user_email"
+        private const val JOB_NAME = "job"
+    }
+
+    override fun onCreate(db: SQLiteDatabase?) {
+        val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + DbHelper.TABLE_CONTACTS + "("
+                + DbHelper.KEY_EMAIL + " TEXT PRIMARY KEY,"
+                + DbHelper.KEY_NAME + " TEXT,"
+                + DbHelper.KEY_PASSWORD + " TEXT" + ")")
+        db?.execSQL(CREATE_CONTACTS_TABLE)
+        /* create table contacts ( email  TEXT PRIMARY KEY , username TEXT ,password TEXT ) */
+
+        val CREATE_TODO_TABLE = ("CREATE TABLE " + DbHelper.TABLE_TODOS + "("
+                + DbHelper.KEY_ID + " INTEGER PRIMARY KEY,"
+                + DbHelper.DESCRIPTION + " TEXT,"
+                + DbHelper.JOB_NAME + " TEXT,"
+                + DbHelper.USER_EMAIL + " TEXT" + ")")
+        db?.execSQL(CREATE_TODO_TABLE)
+        // create table todo (id INTEGER PRIMARY KEY  , description TEXT, job TEXT ,user_email TEXT ) */
+
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        toDeletetable()
+        onCreate(db)
+    }
+
+    // Add new User
+    fun addUser(user: User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DbHelper.KEY_NAME, user.username) // Contact Username
+        values.put(DbHelper.KEY_EMAIL, user.email)  //  Email address
+        values.put(DbHelper.KEY_PASSWORD, user.pasword)  // Password
+
+        // Inserting Row
+        db.insert(DbHelper.TABLE_CONTACTS, null, values)
+        db.close()
+    }
+
+    val usersCount: Int
+        get() {
+            val countQuery = "SELECT  * FROM ${DbHelper.TABLE_CONTACTS}"
+            val db = this.readableDatabase
+            val cursor: Cursor = db.rawQuery(countQuery, null)
+            return cursor.count
+        }
+
+    fun deleteAllUser():Unit {
+        val db = this.writableDatabase
+        db.execSQL("delete from ${DbHelper.TABLE_CONTACTS}")
+    }
+
+    val allUsers: List<User>
+        get() {
+            val list: MutableList<User> = ArrayList<User>()
+            val selectQuery = "SELECT  * FROM ${DbHelper.TABLE_CONTACTS}"
+            val db = this.writableDatabase
+            val cursor: Cursor = db.rawQuery(selectQuery, null)
+
+            /*
+            * table
+            *  row -> 1 id ,username,password,email
+            *  row -> 2 id ,username,password,email
+            *  row -> 3 id ,username,password,email
+            * */
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val contact = User("1", username= cursor.getString(1), pasword = cursor.getString(2),email = cursor.getString(0) )
+                    // Adding contact to list
+                    list.add(contact)
+                } while (cursor.moveToNext())
+            }
+
+            return list
+        }
+    // get User from contact
+    fun getUser(email: String): User? {
+        val db = this.readableDatabase
+        val cursor: Cursor? = db.query(
+            DbHelper.TABLE_CONTACTS,
+            arrayOf(
+                DbHelper.KEY_EMAIL,
+                DbHelper.KEY_NAME,
+                DbHelper.KEY_PASSWORD
+            ),
+            "${DbHelper.KEY_EMAIL}=?",
+            arrayOf(email.toString()),
+            null,
+            null,
+            null,
+            null
+        )
+        if (cursor != null)
+            cursor.moveToFirst()
+        // return contact
+        println("+++++++++++++++++++++++++++++++++++++++++++++")
+        println(" GET USER NAME : $email")
+        println("+++++++++++++++++++++++++++++++++++++++++++++")
+        println("cursor pointer at 0 : ${cursor?.getString(0)}")
+        println("cursor pointer at 1 : ${cursor?.getString(1)}")
+        println("cursor pointer at 2 : ${cursor?.getString(2)}")
+        println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+        val user = cursor?.let {
+            User(
+                id= "1",
+                email = cursor.getString(0),
+                username = cursor.getString(1),
+                pasword=cursor.getString(2)
+            )
+        }
+        return  user
+    }
+    // update user
+    fun updateUser(user: User): Int {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DbHelper.KEY_NAME, user.username) // Contact Username
+        values.put(DbHelper.KEY_PASSWORD, user.pasword)  // Password
+
+        // updating row
+        return db.update(
+            DbHelper.TABLE_CONTACTS,
+            values,
+            "${DbHelper.KEY_EMAIL} = ?",
+            arrayOf(user.email)
+        )
+    }
+
+    // Deleting single contact
+    fun deleteUser(user: User?) {
+        val db = this.writableDatabase
+        db.delete(DbHelper.TABLE_CONTACTS, "${DbHelper.KEY_EMAIL} = ?", arrayOf(user?.email))
+        Log.d("User Deleted","User Deleted")
+        db.close()
+    }
+
+    // to delete table contact
+    fun toDeletetable() {
+        var db = this.writableDatabase
+        db.execSQL("DROP TABLE IF EXISTS "+DbHelper.TABLE_CONTACTS)
+        //createTable()
+    }
+    // to delete table Todo
+    fun toDeletetodotable() {
+        var db = this.writableDatabase
+        db.execSQL("DROP TABLE IF EXISTS "+DbHelper.TABLE_TODOS)
+    }
+
+    // create table contact
+
+
+    // code to add the new contact
+    fun addTodo(todo: Todo) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DbHelper.DESCRIPTION, todo.description) // Contact Username
+        values.put(DbHelper.USER_EMAIL, todo.user_email)  //  Email address
+        values.put(DbHelper.JOB_NAME, todo.job)  //  Email address
+
+        // Inserting Row
+        db.insert(DbHelper.TABLE_TODOS, null, values)
+        db.close()
+    }
+    val alltodos: List<Todo>
+        get() {
+            val list: MutableList<Todo> = ArrayList<Todo>()
+            // Select All Query
+            val selectQuery = "SELECT  * FROM ${DbHelper.TABLE_TODOS}"
+            val db = this.writableDatabase
+            val cursor: Cursor = db.rawQuery(selectQuery, null)
+
+            /*
+            * table
+            *  row -> 1 id ,username,password,email
+            *  row -> 2 id ,username,password,email
+            *  row -> 3 id ,username,password,email
+            * */
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("cursor pointer at 3 : ${cursor.getString(3)}")
+                    println("+++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val todo = Todo(id = cursor.getString(0), description= cursor.getString(1),user_email = cursor.getString(3) ,job = cursor.getString(2))
+                    // Adding contact to list
+                    list.add(todo)
+                } while (cursor.moveToNext())
+            }
+
+            // return contact list
+            return list
+        }
+}
+
+---------
+CLASS 33:
+---------
+        fun getTodoByEmail(email: String): List<Todo> {
+
+            var list :ArrayList<Todo> = ArrayList()
+            val db = this.readableDatabase
+            val cursor: Cursor? = db.query(
+                DbHelper.TABLE_TODOS,
+                arrayOf(
+                    DbHelper.KEY_ID,
+                    DbHelper.DESCRIPTION,
+                    DbHelper.USER_EMAIL,
+                    DbHelper.JOB_NAME
+                ),
+                "${DbHelper.USER_EMAIL}=?",
+                arrayOf(email.toString()),
+                null,
+                null,
+                null,
+                null
+            )
+
+                /*
+                * table
+                *  row -> 1 id ,username,password,email
+                *  row -> 2 id ,username,password,email
+                *  row -> 3 id ,username,password,email
+                * */
+
+            // looping through all rows and adding to list
+            if (cursor!!.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++Filter with email++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("cursor pointer at 3 : ${cursor.getString(3)}")
+                    println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val todo = Todo(id = cursor.getString(0), description= cursor.getString(1),user_email = cursor.getString(2) ,job = cursor.getString(3))
+                    // Adding contact to list
+                    list.add(todo)
+                } while (cursor.moveToNext())
+            }
+            return list
+        }
+
+How to call from activity:
+------------------------
+try {
+             var db = DbHelper(this)
+             todoList =db.getTodoByEmail(user.email)
+         } catch (error:Exception){
+            Log.e(TAG,error.message.toString())
+         }
+         
+-----------
+CLASSS 34: 
+-----------
+if(todoList.isNotEmpty()) {
+             binding.emptyRecylerView.visibility = 4
+             var adapter = BaseAdapter(this, todoList).also {
+                     adpater ->  binding.baseAdpater.adapter = adpater
+             }
+ }
+ 
+ XML:
+ <?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    tools:context=".DashboardActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background="@color/teal_200">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <include
+                android:id="@+id/layput_toolbar"
+                 layout="@layout/toolbaar"/>
+        </androidx.appcompat.widget.Toolbar>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/float_add_todo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:overScrollMode="always"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_baseline_dashboard_24"
+                android:contentDescription="Submit"
+                android:layout_margin="16dp" />
+
+            <ListView
+                android:visibility="visible"
+                android:id="@+id/baseAdpater"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+            </ListView>
+            <TextView
+                android:id="@+id/empty_recyler_View"
+                android:text="No Todo created!"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="300dp"
+        android:id="@+id/nav_view"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"
+        android:layout_gravity="left"
+        app:headerLayout="@layout/content"
+        app:menu="@menu/menu">
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
+         
+----------         
+CLASS 35:
+----------
+package com.example.demo
+
+import android.content.Context
+import android.content.SharedPreferences
+
+class Session(var ctx: Context) {
+    var prefs: SharedPreferences = ctx.getSharedPreferences("todo-app", Context.MODE_PRIVATE)
+    private var editor: SharedPreferences.Editor = prefs.edit()
+
+    fun setLoggedin(logggedin: Boolean,emial:String,pass:String,name:String,id:String) {
+        editor.putBoolean("loggedInmode", logggedin)
+        editor.putString("email", emial)
+        editor.putString("pass", pass)
+        editor.putString("name",name)
+        editor.putString("id",id)
+        editor.commit()
+    }
+    fun loggedin(): Boolean {
+        return prefs.getBoolean("loggedInmode", false)
+    }
+
+    fun getName(): String? {
+        return prefs.getString("name","empty")
+    }
+    fun getId(): String? {
+        return prefs.getString("id","empty")
+    }
+    fun getPassword(): String? {
+        return prefs.getString("pass","empty")
+    }
+    fun getEmail(): String? {
+        return prefs.getString("email","empty")
+    }
+    fun removeAll() {
+        prefs.edit().remove("todo-app").commit()
+    }
+}
+
+
+
+For Loggging In LoginActivity:
+class LoginActivity : AppCompatActivity() {
+    lateinit var binding: ActivityLoginBinding
+    val TAG = "LOGIN ACTIVITY"
+    lateinit var db :DbHelper
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        settingOnClickListener()
+        // getting User from session if stored
+        var session = Session(this)
+        if(session.loggedin()) {
+           var obj = User(id = session.getId().toString(),username = session.getName().toString(),pasword = session.getPassword().toString(),email = session.getEmail().toString())
+           callToActivity(obj)
+        }
+    }
+
+    private fun settingOnClickListener() {
+        binding.editextEmailAddress.setOnClickListener {
+            binding.editextPasssword.requestFocus()
+        }
+        binding.editextPasssword.setOnClickListener {
+       
+            binding.btnLogin.requestFocus()
+        }
+        binding.btnLogin.setOnClickListener {
+            hideKeyboard(it)
+            if(ValidationChecking()) {
+                var email = binding.editextEmailAddress.text.trim()
+                var password = binding.editextPasssword.text.trim()
+                callDbToCheckUser(email = email,password= password,it)
+            }
+        }
+    }
+
+    private fun callDbToCheckUser(email: CharSequence, password: CharSequence, view: View) {
+        try {
+            val obj = DbHelper(this).getUser(email = email.toString())
+            when {
+                obj == null -> {
+                    Snackbar
+                        .make(view,"Wrong email address", Snackbar.LENGTH_LONG)
+                        .show()
+                }
+                obj.pasword != password.toString() -> {
+                    Snackbar
+                        .make(view,"Wrong password filled, please fill correct one", Snackbar.LENGTH_LONG)
+                        .show(); // Don’t forget to show!
+                }
+                else -> {
+			// Saving Data into Session
+                    var session = Session(this)
+                    session.setLoggedin(true,obj.email,obj.pasword,obj.username,obj.id)
+
+                    callToActivity(obj= obj)
+                    Log.d(TAG, "Data is $obj")
+                }
+            }
+        }catch (exception:Exception) {
+            Log.e(TAG,exception.message.toString())
+            Snackbar
+                .make(view,"Email  is not correct ,Please fill valid email address", Snackbar.LENGTH_LONG)
+                .show(); // Don’t forget to show!
+
+        }
+    }
+
+    private fun callToActivity(obj: User) {
+        var intent = Intent(this,DashboardActivity::class.java)
+        intent.putExtra("obj",obj)
+        startActivity(intent)
+    }
+
+    
+
+    override fun onRestart() {
+        super.onRestart()
+        binding.editextEmailAddress.text.clear()
+        binding.editextPasssword.text.clear()
+    }
+}
+
+Logout:
+private fun logout(mainActivity: DashboardActivity) {
+                        AlertDialog.Builder(mainActivity)
+                            .setTitle("Logout")
+                            .setMessage("Are you sure you want to LogOut !!")
+                            .setPositiveButton("Yes",DialogInterface.OnClickListener {
+                                    dialog, i ->
+                                            mainActivity.finish()
+                                            var session = Session(this)
+                                                session.setLoggedin(false,"","","","")
+                                                session.removeAll()
+                                                finish()
+                             })
+                            .setNegativeButton("No",DialogInterface.OnClickListener {
+                                    dialogInterface, i ->
+                                dialogInterface.dismiss()
+                            }).show()
+
+ }
+ 
+ 
+----------
+CLASS 36:
+----------
+RecyclerView Adapter:
+
+package com.example.demo.Adapter
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.demo.R
+import com.example.demo.modal.Todo
+
+class RecylerViewAdpater(var context: Context, var list:MutableList<Todo>) : RecyclerView.Adapter<com.example.demo.Adapter.RecylerViewAdpater.ViewHolder>() {
+
+    override fun getItemId(positon: Int): Long {
+        return positon.toLong()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_layout, parent, false)
+        return ViewHolder(v)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.description.text = list[position].description
+        holder.job.text = list[position].job
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var job: TextView = view.findViewById(R.id.adpater_username)
+        var description: TextView = view.findViewById(R.id.adpater_from)
+    }
+}
+
+-------------------
+Dashboard Activity:
+-------------------
+
+class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private val TAG = "DASHBOARD ACTIVITY"
+    lateinit var binding:ActivityDashboardBinding
+    lateinit var user:User
+    var todoList:MutableList<Todo> = mutableListOf()
+    lateinit var adapter:RecylerViewAdpater
+
+     @SuppressLint("WrongConstant", "NotifyDataSetChanged")
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityDashboardBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         // Getting data from parser
+         user = intent.extras?.getParcelable<User>("obj")!!
+
+         binding.navView.setNavigationItemSelectedListener(this)
+         binding.floatAddTodo.setOnClickListener {
+             var intent = Intent(this,TodoAddActivity::class.java)
+                 intent.putExtra("obj",user)
+                 startActivity(intent)
+         }
+         try {
+             var db = DbHelper(this)
+             todoList =db.getTodoByEmail(user.email,"0")
+         } catch (error:Exception){
+            Log.e(TAG,error.message.toString())
+         }
+         binding.swiperefreshLayout.setOnRefreshListener(OnRefreshListener {
+             var db = DbHelper(this)
+             var temp = db.getTodoByEmail(user.email,todoList.size.toString())
+             for(todo in temp) {
+                 todoList.add(todo)
+             }
+             //todoList = db.getTodoByEmail(user.email)
+             adapter.notifyDataSetChanged()
+             binding.swiperefreshLayout.isRefreshing = false
+         })
+
+         if(todoList.isNotEmpty()) {
+             val staggeredGridLayoutManager = StaggeredGridLayoutManager(1,LinearLayoutManager.VERTICAL)
+             binding.emptyRecylerView.visibility = View.INVISIBLE
+             adapter = RecylerViewAdpater(this,todoList)
+             binding.baseAdpater.layoutManager = staggeredGridLayoutManager
+             binding.baseAdpater.adapter = adapter
+         }
+     }
+
+ 
+}
+
+----------
+CLASS 37:
+----------
+-------------------
+Dashboard Activity:
+-------------------
+
+class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private val TAG = "DASHBOARD ACTIVITY"
+    lateinit var binding:ActivityDashboardBinding
+    lateinit var user:User
+    var todoList:MutableList<Todo> = mutableListOf()
+    lateinit var adapter:RecylerViewAdpater
+
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityDashboardBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+
+         binding.swiperefreshLayout.setOnRefreshListener(OnRefreshListener {
+             var db = DbHelper(this)
+             var temp = db.getTodoByEmail(user.email,todoList.size.toString())
+             for(todo in temp) {
+                 todoList.add(todo)
+             }
+             //todoList = db.getTodoByEmail(user.email)
+             adapter.notifyDataSetChanged()
+             binding.swiperefreshLayout.isRefreshing = false
+         })
+
+
+}
+XML:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    tools:context=".DashboardActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background="@color/teal_200">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <include
+                android:id="@+id/layput_toolbar"
+                 layout="@layout/toolbaar"/>
+        </androidx.appcompat.widget.Toolbar>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/float_add_todo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:overScrollMode="always"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_baseline_dashboard_24"
+                android:contentDescription="Submit"
+                android:layout_margin="16dp" />
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swiperefreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/baseAdpater"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:visibility="visible"/>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <TextView
+                android:id="@+id/empty_recyler_View"
+                android:text="No Todo created!"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="300dp"
+        android:id="@+id/nav_view"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"
+        android:layout_gravity="left"
+        app:headerLayout="@layout/content"
+        app:menu="@menu/menu">
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
+
+
+---------
+CLASS 38:
+----------
+-------------------
+Dashboard Activity:
+-------------------
+
+class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private val TAG = "DASHBOARD ACTIVITY"
+    lateinit var binding:ActivityDashboardBinding
+    lateinit var user:User
+    var todoList:MutableList<Todo> = mutableListOf()
+    lateinit var adapter:RecylerViewAdpater
+
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityDashboardBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+	try {
+             var db = DbHelper(this)
+             todoList =db.getTodoByEmail(email = user.email,offset = "0")
+         } catch (error:Exception){
+            Log.e(TAG,error.message.toString())
+         }
+
+         binding.swiperefreshLayout.setOnRefreshListener(OnRefreshListener {
+             var db = DbHelper(this)
+             var temp = db.getTodoByEmail(user.email,todoList.size.toString())
+             for(todo in temp) {
+                 todoList.add(todo)
+             }
+             //todoList = db.getTodoByEmail(user.email)
+             adapter.notifyDataSetChanged()
+             binding.swiperefreshLayout.isRefreshing = false
+         })
+
+
+}
+
+--
+DbHelper Class:
+-------------
+package com.example.demo
+
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
+import com.example.demo.modal.Todo
+import com.example.demo.modal.User
+
+class DbHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,null,DATABASE_VERSION) {
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "user"
+
+        private const val TABLE_CONTACTS = "contacts"
+        private const val KEY_NAME = "username"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_EMAIL = "email"
+
+        private const val TABLE_TODOS="todo"
+        private const val KEY_ID = "id"
+        private const val DESCRIPTION = "description"
+        private const val USER_EMAIL = "user_email"
+        private const val JOB_NAME = "job"
+    }
+
+  
+        fun getTodoByEmail(email: String,offset:String):MutableList<Todo> {
+
+            var list :ArrayList<Todo> = ArrayList()
+            val db = this.readableDatabase
+            val cursor: Cursor? = db.query(
+                DbHelper.TABLE_TODOS,
+                arrayOf(
+                    DbHelper.KEY_ID,
+                    DbHelper.DESCRIPTION,
+                    DbHelper.USER_EMAIL,
+                    DbHelper.JOB_NAME
+                ),
+                "${DbHelper.USER_EMAIL}=?",
+                arrayOf(email.toString()),
+                null,
+                null,
+                null,
+                "$offset,5"
+            )
+
+                /*
+                * table
+                *  row -> 1 id ,username,password,email
+                *  row -> 2 id ,username,password,email
+                *  row -> 3 id ,username,password,email
+                * */
+
+            // looping through all rows and adding to list
+            if (cursor!!.moveToFirst()) {
+                do {
+                    println("+++++++++++++++++++++++++++Filter with email++++++++++++++++++")
+                    println("cursor pointer at 0 : ${cursor.getString(0)}")
+                    println("cursor pointer at 1 : ${cursor.getString(1)}")
+                    println("cursor pointer at 2 : ${cursor.getString(2)}")
+                    println("cursor pointer at 3 : ${cursor.getString(3)}")
+                    println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
+                    val todo = Todo(id = cursor.getString(0), description= cursor.getString(1),user_email = cursor.getString(2) ,job = cursor.getString(3))
+                    // Adding contact to list
+                    list.add(todo)
+                } while (cursor.moveToNext())
+            }
+            return list
+        }
+}
+
+----------
+CLASS 39:
+----------
+-------------------
+Dashboard Activity:
+-------------------
+class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private val TAG = "DASHBOARD ACTIVITY"
+    lateinit var binding:ActivityDashboardBinding
+    lateinit var user:User
+    var todoList:MutableList<Todo> = mutableListOf()
+    lateinit var adapter:RecylerViewAdpater
+
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = ActivityDashboardBinding.inflate(layoutInflater)
+         val view = binding.root
+         setContentView(view)
+
+         // Getting data from parser
+         user = intent.extras?.getParcelable<User>("obj")!!
+
+         // Printing User Detail on Navigation View
+         binding.navView.getHeaderView(0).findViewById<TextView>(R.id.right_side_menu).text = user.username
+
+	 // closing navgation on click	
+         binding.layputToolbar.expandedMenu.setOnClickListener {
+             openDrawer(binding.drawerLayout)
+         }
+     }
+
+  
+    private fun closeDrawer(drawerLayout: DrawerLayout) {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.END)
+        }
+    }
+
+    private fun openDrawer(drawerLayout: DrawerLayout) {
+        drawerLayout.openDrawer(GravityCompat.START)
+    }
+    private fun logout(mainActivity: DashboardActivity) {
+                        AlertDialog.Builder(mainActivity)
+                            .setTitle("Logout")
+                            .setMessage("Are you sure you want to LogOut !!")
+                            .setPositiveButton("Yes",DialogInterface.OnClickListener {
+                                    dialog, i ->
+                                            mainActivity.finish()
+                                            var session = Session(this)
+                                                session.setLoggedin(false,"","","","")
+                                                session.removeAll()
+                                                finish()
+                             })
+                            .setNegativeButton("No",DialogInterface.OnClickListener {
+                                    dialogInterface, i ->
+                                dialogInterface.dismiss()
+                            }).show()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        closeDrawer(binding.drawerLayout)
+    }
+}
+
+----------
+CLASS 40:
+----------
+class RecylerViewAdpater(var context: Context, var list:MutableList<Todo>) : RecyclerView.Adapter<com.example.demo.Adapter.RecylerViewAdpater.ViewHolder>() {
+
+    override fun getItemId(positon: Int): Long {
+        return positon.toLong()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_layout, parent, false)
+        return ViewHolder(v)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.description.text = list[position].description
+        holder.job.text = list[position].job
+        holder.view.setOnClickListener {
+            Toast.makeText(context,"Recycler View item clicked $position",Toast.LENGTH_LONG).show()
+        }
+        holder.view.setOnLongClickListener {
+            removeItem(view = it,position=position,todo= list[position])
+            return@setOnLongClickListener true
+        }
+    }
+
+    private fun removeItem(view: View, position: Int, todo: Todo) {
+        var db = DbHelper(context)
+        var status = db.deleteTodo(view,todo)
+        if(status) {
+            list.remove(todo)
+            notifyItemRemoved(position)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var view:View = view
+        var job: TextView = view.findViewById(R.id.adpater_username)
+        var description: TextView = view.findViewById(R.id.adpater_from)
+    }
+}
+
+-----------
+CLASS 41:
+-----------
+package com.example.demo.Adapter
+
+import android.app.Dialog
+import android.content.Context
+import android.text.Editable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.example.demo.DbHelper
+import com.example.demo.R
+import com.example.demo.modal.Todo
+import com.google.android.material.snackbar.Snackbar
+
+class RecylerViewAdpater(var context: Context, var list:MutableList<Todo>) : RecyclerView.Adapter<com.example.demo.Adapter.RecylerViewAdpater.ViewHolder>() {
+
+    override fun getItemId(positon: Int): Long {
+        return positon.toLong()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_layout, parent, false)
+        return ViewHolder(v)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.description.text = list[position].description
+        holder.job.text = list[position].job
+        holder.view.setOnClickListener {
+            updateItem(it,position,list[position])
+        }
+        holder.view.setOnLongClickListener {
+            removeItem(view = it,position=position,todo= list[position])
+            return@setOnLongClickListener true
+        }
+    }
+
+    private fun updateItem(it: View?, position: Int, todo: Todo) {
+        showDialogBox(todo,it,position)
+    }
+
+    private fun showDialogBox(todo: Todo, view: View?, position: Int) {
+        var dialog = Dialog(context)
+        dialog.setContentView(R.layout.layout_update_todo)
+
+        //setting description value
+        var description = dialog.findViewById<EditText>(R.id.editext_description)
+        description.text = Editable.Factory.getInstance().newEditable(todo.description)
+
+        // setting name for todo
+        var name = dialog.findViewById<EditText>(R.id.editext_job_name)
+        name.text = Editable.Factory.getInstance().newEditable(todo.job)
+
+        var update = dialog.findViewById<Button>(R.id.btn_update)
+
+        update.setOnClickListener {
+            if(checkValidate(description,name,it)) {
+                if(name.text.trim()!=todo.job) {
+                    todo.job = name.text.trim().toString()
+                }
+                if(description.text.trim()!= todo.description) {
+                    todo.description = description.text.toString()
+                }
+                var db = DbHelper(context)
+                db.updateTodo(todo = todo)
+                list[position]= todo
+                notifyItemChanged(position)
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+    private fun checkValidate(description: EditText, name: EditText,view: View):Boolean {
+        if(name.text.trim().isEmpty()) {
+            Snackbar
+                .make(view,"Please fill job , it should not be blank or empty",Snackbar.LENGTH_LONG).show()
+            return false
+        }
+        if(description.text.trim().isEmpty()) {
+            Snackbar
+                .make(view,"Please fill description, it should not be blank or empty",Snackbar.LENGTH_LONG).show()
+            return false
+        }
+            return true
+        }
+
+    private fun removeItem(view: View, position: Int, todo: Todo) {
+        var db = DbHelper(context)
+        var status = db.deleteTodo(view,todo)
+        if(status) {
+            list.remove(todo)
+            notifyItemRemoved(position)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var view:View = view
+        var job: TextView = view.findViewById(R.id.adpater_username)
+        var description: TextView = view.findViewById(R.id.adpater_from)
+    }
+}
+
+
+------------------
+Dialog box layout:
+------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:text="UPDATE TODO"
+        android:textSize="@dimen/_20sp"
+        android:textStyle="bold"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="@dimen/_20dp"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_username"/>
+
+    <EditText
+        android:id="@+id/editext_job_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_username"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_cornor"
+        android:gravity="center"
+        android:hint="Enter Job Name"
+        android:padding="20sp" />
+
+    <EditText
+        android:padding="20dp"
+        android:id="@+id/editext_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editext_job_name"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/rounded_cornor"
+        android:gravity="center"
+        android:textSize="@dimen/_20sp"
+        android:hint="Enter Description about your todo" />
+
+    <Button
+        android:id="@+id/btn_update"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/ic_baseline_check_circle_outline_24"
+        android:padding="20dp"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+</RelativeLayout>
+
+
+
+-----------------------------------------------------
+-----------------------------------------------------
+1. Activity and its life cycle:         ---> 24 min
+2. viewBinding in Activity              ---->11 min
+3. viewBinding in Project               ---->13 min 
+4. Fragment and Calling one fragment from another --> 28min
+5. fragment life cycle  --> 17min
+6. Sending data from one activity to another with intent  -> 13min
+7. Sending data from one activity to another with intent And Parcable  --> 16min
+8. Dependecy for SideMenu  --> 7min
+9. SideMenu With SetOnClickListener --> 1hour
+10. BaseAdapter --> 40min
+----total hours: 230 minutes -> 4hours for basic java
+---
+SQL DATABASE:
+
+11. Creating Database class:  --> 6min
+12. Creating table in database class  -> 17min
+13. Add User in Table  --> 15min
+14. Get User count  --> 7min
+15. Delete All users --> 7min
+16. Get All Users  --> 21min
+17. GetUser With ID  --> 14min
+18. Update User and Delete Specific User  ->12min
+19. manifest.xml understanding --> 15min
+20. Validation login  --> 20min
+21. Validation Registration  --> 10min
+22. Do you want to exit ->OnbackPressed->Activity  -> 11min
+23. Renaming acitivty with Refactor  --> 10min
+24. Reseeting DbHelper Class + Insert Query   --> 30min
+25. Get query in SQL  --> 18min
+26. logcat How to use --> 11min
+27. todo table creation , insertion to table --> 30min
+28. add user  --> 25min
+29. login user --> 25min
+30. recyclerlistView --> 17min 
+31. Snackbar is used in place of Toast --> 20min 
+32. DbHelper changes --> 1min
+33. filter by email todos  -->11min
+34. if todo empty --> 8min
+35. Session storing Data  -->27min
+36. RecyclerViewAdapter  -->11min
+37. SwipeRefreshLayout -->7min
+38. Adding offset to database+ connecting SwipeRefreshLayout -->14min
+39. navigation setting ,drawer open close --> 9min
+40. Adding deletion todo functionality --> 11min
+41. updating todo item -> 19min
+total hours -> 460mins ->  7.65 hours(project hours)
+
+    

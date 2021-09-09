@@ -88,6 +88,7 @@ Operator Example Expanded Form
 %= x %= 10 x = x % 10
 
 Unary Operator:
+
 Following is a list of all Unary operators:
 + unary plus +x
 - unary minus -x
@@ -411,7 +412,10 @@ class multipleInterfaceExample: A, B {
     obj.printMeToo()
   }
   
+  
+-----------------------------------  
 9. Null Safety & Generic:Generics:
+------------------------------------
  fun main(args: Array<String>) {
     var objet = genericsExample<String>("JAVA")
     var objet1 = genericsExample<Int>(10)
@@ -436,9 +440,9 @@ class genericsExample<out T>(input:T) {
   }
 }
 
-------------
-Null Safety:
--------------
+-----------------
+10. Null Safety:
+-----------------
 Kotlin types system differentiates between references which can hold null (nullable reference) and which cannot hold null (non null reference). Normally,types of String are not nullable. To make string which holds null value, we have toexplicitly define them by putting a ? behind the String as: String?
 
 var str1: String? = "hello"
@@ -474,7 +478,7 @@ fun main(args: Array<String>){
 }
 
 ------------------------------------
-Exception Handling / Error Handling:
+11. Exception Handling / Error Handling:
 ------------------------------------
 Code:
 fun main(args: Array<String>) {

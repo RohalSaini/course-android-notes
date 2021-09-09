@@ -1,0 +1,1961 @@
+----------
+CLASS 4:
+----------
+Kotlin Code:
+
+var Editext_username = findViewById<EditText>(R.id.edittext_username)
+var textView_name = findViewById<TextView>(R.id.textView_username)
+var buttonView_click = findViewById<Button>(R.id.button_click)
+
+buttonView_click.setOnClickListener {
+ var name = Editext_username.text.toString()
+ textView_name.visibility = View.VISIBLE
+ textView_name.text = name
+}
+        
+        
+XML:
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/edittext_username"
+        android:hint="Enter your name !!"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_click"
+        android:text="CLick Me !!"
+        android:layout_marginLeft="20dp"/>
+    <TextView
+        android:id="@+id/textView_username"
+        android:visibility="invisible"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>    
+
+---------
+CLASS 5:
+----------
+XML Code:
+---------
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_marginTop="20dp"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="TextView -1"
+           android:textSize="20sp"
+           android:padding="20dp"
+           android:background="@color/teal_200"
+           android:layout_margin="10dp"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="TextView -2"
+           android:textSize="20sp"
+           android:padding="20dp"
+           android:background="@color/teal_200"
+           android:layout_margin="10dp"/>
+   </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView -3"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:background="@color/teal_200"
+        android:layout_margin="10dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView -1"
+            android:textSize="20sp"
+            android:padding="20dp"
+            android:background="@color/teal_200"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView -2"
+            android:textSize="20sp"
+            android:padding="20dp"
+            android:background="@color/teal_200"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+</LinearLayout>    
+
+--------
+CLASS 6:
+--------
+Kotlin Code:
+class MainActivity : AppCompatActivity() {
+    lateinit var editText_username: EditText    // telling compiler to have varible of TYPE: Edittext
+    lateinit var editText_password: EditText   // telling compiler to have varible of TYPE: Edittext
+    lateinit var editText_emailAddress: EditText   // telling compiler to have varible of TYPE: Edittext
+    lateinit var editText_city:EditText   // telling compiler to have varible of TYPE: Edittext
+
+    lateinit var button_Login:Button   // telling compiler to have varible of TYPE: Button
+    // lateinit means it will intlialze late
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+       
+        editText_username = findViewById(R.id.editext_username)   // binding ID with varible
+        editText_emailAddress = findViewById(R.id.editext_emailAddress)  // binding ID with varible
+        editText_password = findViewById(R.id.editext_passsword)  // binding ID with varible
+        editText_city = findViewById(R.id.editext_city)  // binding ID with varible
+
+        button_Login = findViewById(R.id.button_login) // binding ID with varible
+
+
+        button_Login.setOnClickListener {
+        
+            var username = editText_username.text   // Getting value from Editext
+            var password = editText_password.text  // Getting value from Editext
+            var email = editText_emailAddress.text  // Getting value from Editext
+            var city = editText_city.text   // Getting value from Editext
+
+            println(" Name : $username  \n Password: $password  \n Email : $email  \n City: $city")
+
+            Toast.makeText(this," Name : $username  \n Password: $password  \n Email : $email  \n City: $city",Toast.LENGTH_LONG).show()
+        }
+    }
+}
+        
+        
+XML:
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registration"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/editext_username"
+        android:hint="Enter username"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:inputType="text"
+        android:padding="5dp"
+        android:background="@drawable/round_cornor"
+        android:maxLines="1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_passsword"
+        android:hint="Enter password"
+        android:layout_marginTop="20dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_emailAddress"
+        android:hint="Enter email address"
+        android:inputType="textEmailAddress"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_city"
+        android:hint="Enter City Name"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:layout_marginRight="40dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <Button
+        android:id="@+id/button_login"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="Login"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:padding="5px"
+        android:background="@drawable/round_cornor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+------------------
+Round Cornor XML:
+------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    android:padding="15dp">
+    <solid android:color="@color/white"/>
+    <corners android:radius="10dp"/>
+    <stroke android:width="5px" android:color="@color/teal_200"/>
+</shape>
+
+--------
+CLASS 8:
+--------
+
+XML Code:
+---------
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/editext_username"
+        android:hint="@string/enter_username"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:inputType="text"
+        android:padding="5dp"
+        android:background="@drawable/round_cornor"
+        android:maxLines="1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_passsword"
+        android:hint="@string/enter_password"
+        android:layout_marginTop="20dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_emailAddress"
+        android:hint="@string/enter_email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_city"
+        android:hint="@string/enter_city"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textColor="@color/color_purple"
+        android:layout_marginRight="40dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <Button
+        android:id="@+id/button_login"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="@string/login"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:padding="5px"
+        android:background="@drawable/round_cornor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+
+colors.xml::
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_purple">#7A99BD</color>
+</resources>
+
+
+strings.xml::
+-------------
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="registration">Registration</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email">Enter email address</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_city">Enter City Name</string>
+    <string name="login">Login</string>
+</resources>
+
+---------
+CLASS 9
+--------
+
+XML Design:
+-----------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginStart="@dimen/_40dp"
+        android:textSize="@dimen/_20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/editext_username"
+        android:hint="@string/enter_username"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginStart="@dimen/_40dp"
+        android:layout_marginEnd="@dimen/_40dp"
+        android:inputType="text"
+        android:padding="@dimen/_5dp"
+        android:background="@drawable/round_cornor"
+        android:maxLines="1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40dp"/>
+    <EditText
+        android:id="@+id/editext_passsword"
+        android:hint="@string/enter_password"
+        android:layout_marginTop="@dimen/_20dp"
+        android:paddingStart="@dimen/_5dp"
+        android:paddingEnd="@dimen/_5dp"
+        android:layout_marginLeft="@dimen/_40dp"
+        android:layout_marginRight="@dimen/_40dp"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_emailAddress"
+        android:hint="@string/enter_email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="@dimen/_5dp"
+        android:paddingEnd="@dimen/_5dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginLeft="@dimen/_40dp"
+        android:layout_marginRight="@dimen/_40dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_city"
+        android:hint="@string/enter_city"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginLeft="@dimen/_40dp"
+        android:paddingStart="@dimen/_5dp"
+        android:paddingEnd="@dimen/_5dp"
+        android:textColor="@color/color_purple"
+        android:layout_marginRight="@dimen/_40dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="@dimen/_40dp"/>
+    <Button
+        android:id="@+id/button_login"
+        android:layout_marginLeft="@dimen/_40dp"
+        android:layout_marginRight="@dimen/_40dp"
+        android:text="@string/login"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_25dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:padding="@dimen/_5dp"
+        android:background="@drawable/round_cornor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+dimens:
+-------
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_40dp">40dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_20sp">20sp</dimen>
+</resources>
+
+--------
+CLASS 10
+--------
+XML Design:
+-----------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginStart="@dimen/_40dp"
+        android:textSize="@dimen/_20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/editext_username"
+        android:hint="@string/enter_username"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginStart="@dimen/_40dp"
+        android:layout_marginEnd="@dimen/_40dp"
+        android:inputType="text"
+        android:padding="@dimen/_5dp"
+        android:background="@drawable/round_cornor"
+        android:maxLines="1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40dp"/>
+    <EditText
+        android:id="@+id/editext_passsword"
+        android:hint="@string/enter_password"
+        android:layout_marginTop="@dimen/_20dp"
+        android:paddingStart="@dimen/_5dp"
+        android:paddingEnd="@dimen/_5dp"
+        android:layout_marginLeft="@dimen/_40dp"
+        android:layout_marginRight="@dimen/_40dp"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_emailAddress"
+        android:hint="@string/enter_email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="@dimen/_5dp"
+        android:paddingEnd="@dimen/_5dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginLeft="@dimen/_40dp"
+        android:layout_marginRight="@dimen/_40dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="40dp"/>
+    <EditText
+        android:id="@+id/editext_city"
+        android:hint="@string/enter_city"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginLeft="@dimen/_40dp"
+        android:paddingStart="@dimen/_5dp"
+        android:paddingEnd="@dimen/_5dp"
+        android:textColor="@color/color_purple"
+        android:layout_marginRight="@dimen/_40dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/round_cornor"
+        android:layout_height="@dimen/_40dp"/>
+    <Button
+        android:id="@+id/button_login"
+        android:layout_marginLeft="@dimen/_40dp"
+        android:layout_marginRight="@dimen/_40dp"
+        android:text="@string/login"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_25dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:padding="@dimen/_5dp"
+        android:background="@drawable/round_cornor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+dimens:
+-------
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_40dp">40dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_20sp">20sp</dimen>
+</resources>
+
+---------
+CLASS 11:
+---------
+Kotlin:
+class MainActivity : AppCompatActivity() {
+    lateinit var editText_username: EditText
+    lateinit var editText_password: EditText
+    lateinit var editText_emailAddress: EditText
+    lateinit var editText_city:EditText
+    lateinit var button_Login:Button
+
+    lateinit var checbox_updates: CheckBox
+
+   
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        editText_username = findViewById(R.id.editext_username)
+        editText_emailAddress = findViewById(R.id.editext_emailAddress)
+        editText_password = findViewById(R.id.editext_passsword)
+        editText_city = findViewById(R.id.editext_city)
+        button_Login = findViewById(R.id.button_login)
+        checbox_updates = findViewById(R.id.checkbox_updates)
+
+
+
+        button_Login.setOnClickListener {
+
+            var username = editText_username.text
+            var password = editText_password.text
+            var email = editText_emailAddress.text
+            var city = editText_city.text
+            var gender= ""
+            var updates = "No"
+            if(checbox_updates.isChecked) {
+                updates = "Yes"
+            }
+            
+            println(" Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $updates")
+            Toast.makeText(this," Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $update",Toast.LENGTH_LONG).show()
+        }
+    }
+}
+
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:textSize="@dimen/_20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/editext_username"
+            android:hint="@string/enter_username"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginEnd="@dimen/_40dp"
+            android:inputType="text"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"/>
+        <EditText
+            android:id="@+id/editext_passsword"
+            android:hint="@string/enter_password"
+            android:layout_marginTop="@dimen/_20dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <EditText
+            android:id="@+id/editext_emailAddress"
+            android:hint="@string/enter_email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <EditText
+            android:id="@+id/editext_city"
+            android:hint="@string/enter_city"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:textColor="@color/color_purple"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="@dimen/_40dp"/>
+        <CheckBox
+            android:id="@+id/checkbox_updates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:button="@drawable/checkbox"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:text="@string/updates_want"/>
+        <Button
+            android:id="@+id/button_login"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:text="@string/login"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_25dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
+
+
+---
+String.xml
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="registration">Registration</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email">Enter email address</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_city">Enter City Name</string>
+    <string name="updates_want">want updates ?</string>
+    <string name="login">Login</string>
+</resources>
+
+
+colors.xml:
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_purple">#7A99BD</color>
+</resources>
+
+dimens.xml:
+---------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_40dp">40dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_20sp">20sp</dimen>
+</resources>
+
+checkbox.xml
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_checked="true"
+        android:drawable="@drawable/ic_baseline_check_circle_24" />
+    <item
+        android:state_checked="false"
+        android:drawable="@drawable/ic_baseline_radio_button_unchecked_24"/>
+</selector>
+
+---------
+CLASS 12:
+---------
+Kotlin:
+class MainActivity : AppCompatActivity() {
+    lateinit var editText_username: EditText
+    lateinit var editText_password: EditText
+    lateinit var editText_emailAddress: EditText
+    lateinit var editText_city:EditText
+    lateinit var button_Login:Button
+
+    lateinit var checbox_updates: CheckBox
+
+    lateinit var radioButton_gender: RadioButton
+    lateinit var radioGroup :RadioGroup
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        editText_username = findViewById(R.id.editext_username)
+        editText_emailAddress = findViewById(R.id.editext_emailAddress)
+        editText_password = findViewById(R.id.editext_passsword)
+        editText_city = findViewById(R.id.editext_city)
+        button_Login = findViewById(R.id.button_login)
+        checbox_updates = findViewById(R.id.checkbox_updates)
+
+        radioGroup=findViewById(R.id.radioGroup)
+
+        button_Login.setOnClickListener {
+
+            var username = editText_username.text
+            var password = editText_password.text
+            var email = editText_emailAddress.text
+            var city = editText_city.text
+            var gender= ""
+            var updates = "No"
+            if(checbox_updates.isChecked) {
+                updates = "Yes"
+            }
+            val selectedId = radioGroup.checkedRadioButtonId
+            radioButton_gender = findViewById(selectedId)
+            if (selectedId == -1) {
+                Toast.makeText(this, "Please select Gender", Toast.LENGTH_SHORT).show()
+            } else {
+                    gender = radioButton_gender.text.toString()
+            }
+            println(" Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $updates \n Gender: $gender")
+            Toast.makeText(this," Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $updates \n Gender: $gender",Toast.LENGTH_LONG).show()
+        }
+    }
+}
+
+XML
+---
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:textSize="@dimen/_20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/editext_username"
+            android:hint="@string/enter_username"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginEnd="@dimen/_40dp"
+            android:inputType="text"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"/>
+        <EditText
+            android:id="@+id/editext_passsword"
+            android:hint="@string/enter_password"
+            android:layout_marginTop="@dimen/_20dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <EditText
+            android:id="@+id/editext_emailAddress"
+            android:hint="@string/enter_email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <EditText
+            android:id="@+id/editext_city"
+            android:hint="@string/enter_city"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:textColor="@color/color_purple"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="@dimen/_40dp"/>
+        <CheckBox
+            android:id="@+id/checkbox_updates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:button="@drawable/checkbox"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:text="@string/updates_want"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:orientation="horizontal"
+            android:id="@+id/radioGroup">
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:text="@string/male"
+                android:button="@drawable/checkbox"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:button="@drawable/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:text="@string/female"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:checked="false" />
+        </RadioGroup>
+        <Button
+            android:id="@+id/button_login"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:text="@string/login"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_25dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
+
+---
+String.xml
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="registration">Registration</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email">Enter email address</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_city">Enter City Name</string>
+    <string name="updates_want">want updates ?</string>
+    <string name="login">Login</string>
+</resources>
+
+
+colors.xml:
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_purple">#7A99BD</color>
+</resources>
+
+dimens.xml:
+---------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_40dp">40dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_20sp">20sp</dimen>
+</resources>
+
+checkbox.xml
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_checked="true"
+        android:drawable="@drawable/ic_baseline_check_circle_24" />
+    <item
+        android:state_checked="false"
+        android:drawable="@drawable/ic_baseline_radio_button_unchecked_24"/>
+</selector>
+
+---------
+CLASS 13:
+---------
+Kotlin:
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+    lateinit var editText_username: EditText
+    lateinit var editText_password: EditText
+    lateinit var editText_emailAddress: EditText
+    lateinit var button_Login:Button
+
+    lateinit var checbox_updates: CheckBox
+
+    lateinit var radioButton_gender: RadioButton
+    lateinit var radioGroup :RadioGroup
+
+    lateinit var spinner_city:Spinner
+    val country = arrayOf("India", "USA", "China", "Japan", "Other")
+    lateinit var city:String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        editText_username = findViewById(R.id.editext_username)
+        editText_emailAddress = findViewById(R.id.editext_emailAddress)
+        editText_password = findViewById(R.id.editext_passsword)
+        button_Login = findViewById(R.id.button_login)
+        checbox_updates = findViewById(R.id.checkbox_updates)
+
+        radioGroup=findViewById(R.id.radioGroup)
+
+        spinner_city = findViewById(R.id.editext_city)
+        val aa:ArrayAdapter<String> = ArrayAdapter(this,android.R.layout.simple_spinner_item,country)
+        spinner_city.onItemSelectedListener= this // implement listener on this class
+        spinner_city.adapter = aa
+
+        this.city = country[0]
+
+
+        button_Login.setOnClickListener {
+
+            var username = editText_username.text
+            var password = editText_password.text
+            var email = editText_emailAddress.text
+            var gender= ""
+            var updates = "No"
+            if(checbox_updates.isChecked) {
+                updates = "Yes"
+            }
+            val selectedId = radioGroup.checkedRadioButtonId
+            radioButton_gender = findViewById(selectedId)
+            if (selectedId == -1) {
+                Toast.makeText(this, "Please select Gender", Toast.LENGTH_SHORT).show()
+            } else {
+                    gender = radioButton_gender.text.toString()
+            }
+            println(" Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $updates \n Gender: $gender")
+            Toast.makeText(this," Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $updates \n Gender: $gender",Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+        Toast.makeText(this,country[position] , Toast.LENGTH_LONG).show();
+        this.city = country[position]
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+}
+
+XML
+---
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:textSize="@dimen/_20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/editext_username"
+            android:hint="@string/enter_username"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginEnd="@dimen/_40dp"
+            android:inputType="text"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"/>
+        <EditText
+            android:id="@+id/editext_passsword"
+            android:hint="@string/enter_password"
+            android:layout_marginTop="@dimen/_20dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <EditText
+            android:id="@+id/editext_emailAddress"
+            android:hint="@string/enter_email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <Spinner
+            android:id="@+id/editext_city"
+            android:hint="@string/enter_city"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:textColor="@color/color_purple"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="@dimen/_40dp"/>
+        <CheckBox
+            android:id="@+id/checkbox_updates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:button="@drawable/checkbox"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:text="@string/updates_want"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:orientation="horizontal"
+            android:id="@+id/radioGroup">
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:text="@string/male"
+                android:button="@drawable/checkbox"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:button="@drawable/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:text="@string/female"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:checked="false" />
+        </RadioGroup>
+        <Button
+            android:id="@+id/button_login"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:text="@string/login"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_25dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
+
+---
+String.xml
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="registration">Registration</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email">Enter email address</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_city">Enter City Name</string>
+    <string name="updates_want">want updates ?</string>
+    <string name="login">Login</string>
+</resources>
+
+
+colors.xml:
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_purple">#7A99BD</color>
+</resources>
+
+dimens.xml:
+---------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_40dp">40dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_20sp">20sp</dimen>
+</resources>
+
+checkbox.xml
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_checked="true"
+        android:drawable="@drawable/ic_baseline_check_circle_24" />
+    <item
+        android:state_checked="false"
+        android:drawable="@drawable/ic_baseline_radio_button_unchecked_24"/>
+</selector>
+
+---------
+CLASS 14:
+---------
+Kotlin:
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+    lateinit var editText_username: EditText
+    lateinit var editText_password: EditText
+    lateinit var editText_emailAddress: EditText
+    lateinit var button_Login:Button
+
+    lateinit var checbox_updates: CheckBox
+
+    lateinit var radioButton_gender: RadioButton
+    lateinit var radioGroup :RadioGroup
+
+    lateinit var spinner_city:Spinner
+    lateinit var countries:Array<String>
+    lateinit var city:String
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        editText_username = findViewById(R.id.editext_username)
+        editText_emailAddress = findViewById(R.id.editext_emailAddress)
+        editText_password = findViewById(R.id.editext_passsword)
+        button_Login = findViewById(R.id.button_login)
+        checbox_updates = findViewById(R.id.checkbox_updates)
+        radioGroup=findViewById(R.id.radioGroup)
+
+        countries = resources.getStringArray(R.array.cities_array)
+
+        spinner_city = findViewById(R.id.editext_city)
+        spinner_city.onItemSelectedListener= this
+
+        ArrayAdapter(this,android.R.layout.simple_spinner_item,countries)
+            .also {
+                    adapter ->  spinner_city.adapter = adapter
+             }
+
+        button_Login.setOnClickListener {
+
+            var username = editText_username.text
+            var password = editText_password.text
+            var email = editText_emailAddress.text
+            var gender= ""
+            var updates = "No"
+            if(checbox_updates.isChecked) {
+                updates = "Yes"
+            }
+            val selectedId = radioGroup.checkedRadioButtonId
+            radioButton_gender = findViewById(selectedId)
+            if (selectedId == -1) {
+                Toast.makeText(this, "Please select Gender", Toast.LENGTH_SHORT).show()
+            } else {
+                    gender = radioButton_gender.text.toString()
+            }
+            println(" Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $updates \n Gender: $gender")
+            Toast.makeText(this," Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $updates \n Gender: $gender",Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+       ///  Toast.makeText(this,countries[position] , Toast.LENGTH_LONG).show();
+          this.city = countries[position]
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+}
+
+
+XML
+---
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:textSize="@dimen/_20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/editext_username"
+            android:hint="@string/enter_username"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginEnd="@dimen/_40dp"
+            android:inputType="text"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"/>
+        <EditText
+            android:id="@+id/editext_passsword"
+            android:hint="@string/enter_password"
+            android:layout_marginTop="@dimen/_20dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <EditText
+            android:id="@+id/editext_emailAddress"
+            android:hint="@string/enter_email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <Spinner
+            android:id="@+id/editext_city"
+            android:hint="@string/enter_city"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:textColor="@color/color_purple"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="@dimen/_40dp"/>
+        <CheckBox
+            android:id="@+id/checkbox_updates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:button="@drawable/checkbox"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:text="@string/updates_want"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:orientation="horizontal"
+            android:id="@+id/radioGroup">
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:text="@string/male"
+                android:button="@drawable/checkbox"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:button="@drawable/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:text="@string/female"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:checked="false" />
+        </RadioGroup>
+        <Button
+            android:id="@+id/button_login"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:text="@string/login"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_25dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
+
+---
+String.xml
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="registration">Registration</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email">Enter email address</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_city">Enter City Name</string>
+    <string name="updates_want">want updates ?</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="login">Login</string>
+
+    <string-array name="cities_array">
+        <item>India</item>
+        <item>USA</item>
+        <item>Canada</item>
+        <item>Other</item>
+    </string-array>
+
+</resources>
+
+colors.xml:
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_purple">#7A99BD</color>
+</resources>
+
+dimens.xml:
+---------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_40dp">40dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_20sp">20sp</dimen>
+</resources>
+
+checkbox.xml
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_checked="true"
+        android:drawable="@drawable/ic_baseline_check_circle_24" />
+    <item
+        android:state_checked="false"
+        android:drawable="@drawable/ic_baseline_radio_button_unchecked_24"/>
+</selector>
+
+---------
+CLASS 15:
+---------
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView_registration"
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"    
+        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginStart="@dimen/_40dp"
+        android:textSize="@dimen/_20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/ediText_username_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_registration"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/_40dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:text="Username"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/ediText_username_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_toLeftOf="@+id/ediText_username_1"
+        android:text="Left"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/ediText_username_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:layout_toRightOf="@+id/ediText_username_1"
+        android:text="Right"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sp"
+        android:textStyle="bold" />
+</RelativeLayout>
+
+
+// android:layout_alignParentTop="true" // to set at top of parent 
+// android:layout_alignParentLeft="true" // to set at left of parent 
+// android:layout_alignParentRight="true" // to set at Right of parent 
+// android:layout_alignParentBottom="true" // to set at Bottom of parent  
+
+// android:layout_below="@+id/textView_registration"  // set below of View that is id
+
+// android:layout_toRightOf="@+id/ediText_username_1"   // to place of Right of  View with ID(@+id/ediText_username_1)
+// android:layout_toLeftOf="@+id/ediText_username_1"   // to place of Left of  View with ID(@+id/ediText_username_1)
+
+
+// android:layout_centerHorizontal="true"  // to be center in horizontal direction
+
+----------
+CLASS 16:
+---------
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView_registration"
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginStart="@dimen/_40dp"
+        android:textSize="@dimen/_20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:id="@+id/linear_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textView_registration"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:text="Username"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:text="Enter Username"
+            android:textSize="@dimen/_20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_1"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/labeled_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:text="Password"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editext_username_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:text="Enter Password"
+            android:textSize="@dimen/_20sp" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/linear_12"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_40dp"
+        android:text="Password"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+
+----------
+CLASS 17:
+----------
+Kotlin:
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+    lateinit var editText_username: EditText
+    lateinit var editText_password: EditText
+    lateinit var editText_emailAddress: EditText
+    lateinit var button_Login:Button
+
+    lateinit var checbox_updates: CheckBox
+
+    lateinit var radioButton_gender: RadioButton
+    lateinit var radioGroup :RadioGroup
+
+    lateinit var spinner_city:Spinner
+    lateinit var countries:Array<String>
+    lateinit var city:String
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        editText_username = findViewById(R.id.editext_username)
+        editText_emailAddress = findViewById(R.id.editext_emailAddress)
+        editText_password = findViewById(R.id.editext_passsword)
+        button_Login = findViewById(R.id.button_login)
+        checbox_updates = findViewById(R.id.checkbox_updates)
+        radioGroup=findViewById(R.id.radioGroup)
+
+        countries = resources.getStringArray(R.array.cities_array)
+
+        spinner_city = findViewById(R.id.editext_city)
+        spinner_city.onItemSelectedListener= this
+
+        ArrayAdapter(this,android.R.layout.simple_spinner_item,countries)
+            .also {
+                    adapter ->  spinner_city.adapter = adapter
+             }
+
+        button_Login.setOnClickListener {
+
+            var username = editText_username.text
+            var password = editText_password.text
+            var email = editText_emailAddress.text
+            var gender= ""
+            var updates = "No"
+            if(checbox_updates.isChecked) {
+                updates = "Yes"
+            }
+            val selectedId = radioGroup.checkedRadioButtonId
+            radioButton_gender = findViewById(selectedId)
+            if (selectedId == -1) {
+                Toast.makeText(this, "Please select Gender", Toast.LENGTH_SHORT).show()
+            } else {
+                    gender = radioButton_gender.text.toString()
+            }
+            println(" Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $updates \n Gender: $gender")
+            Toast.makeText(this," Name : $username  \n Password: $password  \n Email : $email  \n City: $city \n want updates: $updates \n Gender: $gender",Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+       ///  Toast.makeText(this,countries[position] , Toast.LENGTH_LONG).show();
+          this.city = countries[position]
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+}
+
+
+XML
+---
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/labeled_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:textSize="@dimen/_20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <EditText
+            android:visibility="visible"
+            android:layout_below="@+id/labeled_registration"
+            android:id="@+id/editext_username"
+            android:hint="@string/enter_username"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginEnd="@dimen/_40dp"
+            android:inputType="text"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"/>
+        <EditText
+            android:layout_below="@+id/editext_username"
+            android:visibility="visible"
+            android:id="@+id/editext_passsword"
+            android:hint="@string/enter_password"
+            android:layout_marginTop="@dimen/_20dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <EditText
+            android:visibility="visible"
+            android:id="@+id/editext_emailAddress"
+            android:hint="@string/enter_email"
+            android:layout_below="@+id/editext_passsword"
+            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="40dp"/>
+        <Spinner
+            android:visibility="visible"
+            android:id="@+id/editext_city"
+            android:hint="@string/enter_city"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:layout_below="@+id/editext_emailAddress"
+            android:textColor="@color/color_purple"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/round_cornor"
+            android:layout_height="@dimen/_40dp"/>
+        <CheckBox
+            android:visibility="visible"
+            android:layout_below="@+id/editext_city"
+            android:id="@+id/checkbox_updates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:button="@drawable/checkbox"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:text="@string/updates_want"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_below="@+id/checkbox_updates"
+            android:id="@+id/radioGroup">
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:text="@string/male"
+                android:button="@drawable/checkbox"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:button="@drawable/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:text="@string/female"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:checked="false" />
+        </RadioGroup>
+        <Button
+            android:id="@+id/button_login"
+            android:layout_below="@+id/radioGroup"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:text="@string/login"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_25dp"
+            android:visibility="visible"
+            android:layout_marginTop="@dimen/_20dp"
+            android:padding="@dimen/_5dp"
+            android:background="@drawable/round_cornor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</ScrollView>
+
+---
+String.xml
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="registration">Registration</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email">Enter email address</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_city">Enter City Name</string>
+    <string name="updates_want">want updates ?</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="login">Login</string>
+
+    <string-array name="cities_array">
+        <item>India</item>
+        <item>USA</item>
+        <item>Canada</item>
+        <item>Other</item>
+    </string-array>
+
+</resources>
+
+colors.xml:
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_purple">#7A99BD</color>
+</resources>
+
+dimens.xml:
+---------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_40dp">40dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_20sp">20sp</dimen>
+</resources>
+
+checkbox.xml
+------------
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_checked="true"
+        android:drawable="@drawable/ic_baseline_check_circle_24" />
+    <item
+        android:state_checked="false"
+        android:drawable="@drawable/ic_baseline_radio_button_unchecked_24"/>
+</selector>
+
+
+--------------------------------------------------------------
+---------------------------------------------------------------
+class 0: basic understaing of XML and Koltin classes --> 9min
+class 1: basic attributes --> 24min
+class 2: TextView -->9min
+class 3: Editext ,Button --> 12min
+class 4: Exercise -> TextView,EditText,Button -->8min
+class 5: understanding Linear Layout -->10min
+class 6: Exercise -> LinearLayout --> 30min
+class 7: Creating Github Id and saving notes  ->17min
+class 8: getting notes from github and using R.id.color and R.id.dimens and  R.id.strings -->15min
+class 9: R.id.dimens -->9min
+class 10: Adding ScrollView  -->4min
+class 11: Adding Checkbox in project --> 11min
+class 12: RadioGroup +RadioButton in project --> 15min
+class 13: Spinner --> 24min
+class 14: Spiner syntax changes  --> 9min
+class 15: Understanding of Relative layout --> 23min
+class 16: Exericse of Relative layout -->12min
+class 17: Project Relative Layout --> 8min
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+total hours : 250 minutes -> 4.15 hours
+

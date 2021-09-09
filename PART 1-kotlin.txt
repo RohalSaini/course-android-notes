@@ -1,0 +1,511 @@
+Kotlin
+1. Variables
+2. Data Types
+3. Arithmetic & Assignment operator
+4. Logical operators
+5. Control flow
+6. Functions
+7. Class
+8. Interface
+9. Null Safety
+10. Collections
+1.Variables
+var vs val
+var -> keyword with which object is declared in koltin but its
+value is changeable.
+val -> keyword with which object is declared whose value
+cannot be changed once defined.
+Code:
+var name1= “android”; // var value can be changed
+println(username); // android
+name1=”kotlin”
+println(username); //kotlin
+val name2 =”studio”; // final value cannot be changed
+println(name2) //studioname2=”kotlin”; // error by kotlin
+2.Data Types:
+Kotlin class
+Int -> stores Integer value {1,2,3,4,5,6,7,8,9}
+Float -> stores Float value {1.1,1.2,1.5}
+String -> stores String value { “android”,”studio”}
+Boolean -> store true or false
+others are Byte,Short,Long,Double
+Code:
+var i:Int = 10 // integer value
+println("Integer Value is " + i)
+val f: Float = 100.00f // float value
+println("Float Value is " + f)
+var from : String = "Android" // String value
+println("Name is "+from);
+var a:Boolean= true // Boolean value
+println(" A value is"+a);
+var b:Boolean= false // Boolean value
+println("B value is "+b);3.Arithmetic & Assignment & Unary Operators
++ Adds together two values x + y
+- Subtracts one value from another x - y
+* Multiplies two values x * y
+/ Divides one value by another x / y
+% Returns the division remainder x % y
+= assigns value x=y
+val x: Int = 40
+val y: Int = 20
+println("x + y = " + (x + y)) // 60
+println("x - y = " + (x - y)) // 20
+println("x / y = " + (x / y)) // 2
+println("x * y = " + (x * y)) //800
+println("x % y = " + (x % y)) //2
+x=y // assigning value of y to x
+println("x = y = " +x); // x= 20
+x += 10 // it means x = x+10;
+println("x " +x); 30
+Following is a list of all assignment operators:
+Operator Example Expanded Form
+= x = 10 x = 10
++= x += 10 x = x - 10
+-= x -= 10 x = x - 10
+*= x *= 10 x = x * 10/= x /= 10 x = x / 10
+%= x %= 10 x = x % 10
+Unary Operator:
+Following is a list of all Unary operators:
++ unary plus +x
+- unary minus -x
+++ increment by 1 ++x
+-- decrement by 1 --x
+! inverts the value of a boolean !x
+Code:
+var x: Int = 40
+var b:Boolean = true
+println("+x = " + (+x))
+println("-x = " + (-x))
+println("++x = " + (++x))
+println("--x = " + (--x))
+println("!b = " + (!b))
++x = 40
+-x = -40
+++x = 41
+--x = 40
+!b = false4.Logical Operators
+Operator Name Description Example
+&& Logical and Returns true if both operands are true
+x && y
+|| Logical or Returns true if either of the operands is
+true x || y
+! Logical not Reverse the result, returns false if the
+operand is true !x
+Code:
+var x: Boolean = true
+var y:Boolean = false
+println("x && y = " + (x && y))
+println("x || y = " + (x || y))
+println("!y = " + (!y))
+x && y = false
+x || y = true
+!y = true
+5. Control Flow
+If-else Statement:
+-----------------------
+Code
+val a:Int = 5
+val b:Int = 2
+var max: Intif (a > b) {
+max = a
+} else {
+max = b
+}
+println("Maximum of a or b is " +max)
+Output: Maximum of a or b is 5
+When statement:
+-----------------------
+when:
+-----
+Code;
+val x:Int = 5
+when (x) {
+1 -> println("x = = 1")
+2 -> println("x = = 2")
+else -> { // Note the block
+println("x is neither 1 nor 2")
+}
+}
+val x:Int = 5
+when (x) {
+1,2 -> println(" Value of X either 1,2")
+else -> { // Note the blockprintln("x is neither 1 nor 2")
+}
+}
+For loop:
+------------
+val items = listOf(1, 2, 3, 4)
+for(element in items){
+println(element)
+}
+Do while loop:
+------------------
+var x:Int = 0
+do {
+x = x + 10
+println("I am inside Do block---"+x)
+} while(x <= 50)
+6. Functions:
+The function should be declared as follows −
+fun <nameOfFunction> (<argument>:<argumentType>):<ReturnType>
+Code: (returns nothing)
+var name =”android”;
+fun printName(x: String){
+println(x);
+}printName(name); // output : android
+Code: (return String)
+var name =”android”;
+fun printName(x: String):String{
+return x;
+}
+println(printName()); // output : android
+Code:(Parameterized function)
+val result = sum(5, 6)
+print(result)
+fun sum(number1: Int, number2:Int): Int{
+val add = number1+number2
+return add
+}
+fun main(args: Array<String>) {
+var x:Int = 10
+println("The value of X is--"+doubleMe(x))
+}
+fun doubleMe(x:Int):Int {
+return 2*x;
+}
+Output: The value of X is--207. Class
+Class is blueprint that is define by us what to do
+// Class declaration
+Class myClass {
+}
+class myClass {
+// property (data member)
+private var name: String = "android"
+// member function
+fun printMe() {
+println(“you are learning ”+name);
+}
+}
+How to create object of class:
+val obj = myClass() // create obj object of myClass class
+obj.printMe() // calling method on object
+Nested Class -> class within a class
+------------------------------------------------
+fun main(args: Array<String>) {
+val demo = Outer.Nested().foo() // calling nested class
+method
+print(demo)}
+class Outer {
+class Nested {
+fun foo() = "Welcome to The TutorialsPoint.com"
+}
+}
+Output: Welcome to The TutorialsPoint.com
+User Defined data Classes
+data class Person(val firstName: String, val age: Int) {}
+data class Person(var firstName: String, var age: Int) {}
+Here data means that it is a data class and we do not need
+to make setter and getter for this class just with data
+keyword it creates automatically setter and getter
+Code:
+data class UserDetail(val username: String,val age: age)
+How to use:
+var obj = UserDetail("android",120);
+Obj.username; //android
+obj.age; // 120
+var list: List<User Detail>= ArrayList<User Detail>();
+var obj1 = UserDetail("android",24);
+list.add(obj1);
+var obj2 = UserDetail("android",26);list.add(obj2);
+var obj 3= UserDetail("android",28);
+list.add(obj3);
+var obj4 = UserDetail("android",30);
+list.add(obj4);
+list.get(1).age; //24
+list.get(2).age; //26
+8. Inheritance ,Interface
+Inheritance -> a kotlin class can inherit just one class.
+an open type used to specify the behavior of a class.
+Code:
+open class ABC {
+fun think () {
+print("Hey!! i am thiking ")
+}
+}
+class BCD: ABC(){ // inheritence happend using default
+constructor
+}
+fun main(args: Array<String>) {
+var a = BCD()
+a.think()
+}
+Overriding interface methods:----------------------------------------
+Overriding Method:
+-----------------
+open class ABC {
+open fun think () {
+print("Hey!! i am thinking ")
+}
+}
+class BCD: ABC() { // inheritance happens using default
+constructor
+override fun think() {
+print("I Am from Child")
+}
+}
+fun main(args: Array<String>) {
+var a = BCD()
+a.think()
+}
+Interface:
+An Interface in Kotlin programming language is defined as
+A Java interface contains default and abstract methods. A
+class can implement multiple interfaces. In Kotlin, interfaces
+are declared using the open keyword.
+interface ExampleInterface {
+var myVar: String
+// abstract property
+fun absMethod()
+// abstract method
+fun sayHello() = "Hello there" // method with default
+implementation
+}interface ExampleInterface {
+var myVar: Int
+// abstract property
+fun absMethod():String
+// abstract method
+fun hello() {
+println("Hello there, Welcome to TutorialsPoint.Com!")
+}
+}
+class InterfaceImp : ExampleInterface {
+override var myVar: Int = 25
+override fun absMethod() = "Happy Learning "
+}
+fun main(args: Array<String>) {
+val obj = InterfaceImp()
+println("My Variable Value is = ${obj.myVar}")
+print("Calling hello(): ")
+obj.hello()
+print("Message from the Website-- ")
+println(obj.absMethod())
+}
+Two Interface implemeting:
+-------------------------
+interface A {
+fun printMe() {
+println(" method of interface A")
+}
+}
+interface B {fun printMeToo() {
+println("I am another Method from interface B")
+}
+}
+// implements two interfaces A and B
+class multipleInterfaceExample: A, B
+fun main(args: Array<String>) {
+val obj = multipleInterfaceExample()
+obj.printMe()
+obj.printMeToo()
+}
+interface ExampleInterface {
+var myVar: Int
+// abstract property
+fun absMethod():String
+// abstract method
+fun hello() {
+println("Hello there, Welcome to TutorialsPoint.Com!")
+}
+}
+class InterfaceImp : ExampleInterface {
+override var myVar: Int = 25
+override fun absMethod() = "Happy Learning "
+}
+fun main(args: Array<String>) {
+val obj = InterfaceImp()
+println("My Variable Value is = ${obj.myVar}")
+print("Calling hello(): ")obj.hello()
+print("Message from the Website-- ")
+println(obj.absMethod())
+}
+interface A {
+fun printMe() {
+println(" method of interface A")
+}
+}
+interface B {
+fun printMeToo() {
+println("I am another Method from interface B")
+}
+}
+// implements two interfaces A and B
+class multipleInterfaceExample: A, B
+fun main(args: Array<String>) {
+val obj = multipleInterfaceExample()
+obj.printMe()
+obj.printMeToo()
+}
+9. Null Safety & Generic:Generics:
+fun main(args: Array<String>) {
+var objet = genericsExample<String>("JAVA")
+var objet1 = genericsExample<Int>(10)
+}
+class genericsExample<T>(input:T) {
+init {
+println("I am getting called with the value "+input)
+}
+}
+fun main(args: Array<String>) {
+var objet1 = genericsExample<Int>(10)
+var object2 = genericsExample<Double>(10.00)
+println(objet1)
+println(object2)
+}
+class genericsExample<out T>(input:T) {
+init {
+println("I am getting called with the value "+input)
+}
+}
+Null Safety:
+Kotlin types system differentiates between references which
+can hold null (nullable reference) and which cannot hold
+null (non null reference). Normally,types of String are not
+nullable. To make string which holds null value, we have toexplicitly define them by putting a ? behind the String as:
+String?
+var str1: String? = "hello"
+str1 = null // ok
+Smart cast to avoid NullPointerException:
+-------------------------------------------------------
+var string: String? = "Hello!"
+print(string.length) // Compile error
+fun main(args: Array<String>){
+var string: String? = "Hello!"
+if(string != null) { // smart cast
+print(string.length) // It works now!
+}
+}
+Use of is for smart cast
+fun main(args: Array<String>){
+val obj: Any = "The variable obj is automatically cast to
+a String in this scope"
+if(obj is String) {
+// No Explicit Casting needed.
+println("String length is ${obj.length}")
+}
+}Use of !is for smart cast
+fun main(args: Array<String>){
+val obj: Any = "The variable obj is automatically cast to
+a String in this scope"
+if(obj !is String) {
+println("obj is not string")
+} else
+// No Explicit Casting needed.
+println("String length is ${obj.length}")
+}
+Exception Handling / Error Handling:
+Code:
+fun main(args: Array<String>) {
+try {
+val myVar:Int = 12;
+val v:String = "Tutorialspoint.com";
+v.toInt();
+} catch(e:Exception) {
+e.printStackTrace();
+} finally {
+println("Exception Handling in Kotlin");
+}
+}10. Array
+Fixed in size
+intArray -> array of Integer class
+arrayOf(),
+arrayOf<Int>(),
+arrayOf<String>(),
+intArrayOf()
+var numbers: IntArray = intArrayOf(1, 2, 3, 4, 5) // intArray
+System.out.println.println("Value at 3rd position : " +
+numbers[2]) // Value at 3rd position : 3
+var myArray1 = arrayOf(1,10,4,6,15)
+var myArray2 = arrayOf<Int>(1,10,4,6,15)
+val myArray3 =
+arrayOf<String>("Ajay","Prakesh","Michel","John","Sumit")
+var myArray4= arrayOf(1,10,4, "Ajay","Prakesh")
+fun main(args: Array<String>) {
+val array1 = arrayOf(1,2,3,4)
+val array2 = arrayOf<Long>(11,12,13,14)
+println(array1.get(0))
+println(array1[2])
+println()
+println(array2.get(2))
+println(array2[3])
+}11. Collection
+Array size is fixed whereas collection size is dynamically
+increased or decreased that is why it is used everywhere
+most.
+Immutable-> we can read and we cannot add or delete in it
+mutable -> we can read and write on it , both functionality is
+provided.
+List
+-----
+Methods are:
+The ArrayList class provides both read and write
+functionalities.
+add(element: E): Boolean -> It is used to add the specific
+element into the collection.
+add(index: Int, element: E) It is used to insert an element
+at specific index.
+get(index: Int): E It is used to return the element at
+specified index in the list.
+set(index: Int, element: E): E It is used to replace the
+element from the specified position from the current list with
+the specified element.
+removeAt(index: Int): E It is used to remove the specific
+index element from the list.
+toArray(): Array<Any?> It is used to return a new array
+of type Array<Any?> with the elements of this collection.clear() -> clear() It is used to remove all elements from
+the collection.
+toString(): String It is used to return a string
+representation of the object.
+.get() -> add
+.set()-> edit value
+.clear() -> clear
+.removeAt() -> remove from specific position
+Example:
+val arrayList = ArrayList<String>()//Creating an empty
+arraylist
+arrayList.add("Ajay")//Adding object in arraylist
+arrayList.add("Vijay")
+arrayList.add("Prakash")
+arrayList.add("Rohan")
+arrayList.add("Vijay")
+arrayList.set(2,"Ashu") // setting value
+println(arrayList.indexOf("Vijay")) // get index of
+arraylist
+arrayList.removeAt(3) // remove 3 index
+arrayList.clear() // to clear arraylist
+println(".......print ArrayList.......")
+for (i in arrayList) {
+println(i)
+}HashMap:
+-------------
+clear() -> remove all values
+remove(key: K): V? -> remove keys with corrosponding
+values.
+get(key: K): V? -> returns value related to key
+put(key: K, value: V): V? -> It puts the specified key and
+value in the map
+Code:
+val hashMap:HashMap<Int,String> =
+HashMap<Int,String>() //define empty hashmap
+hashMap.put(1,"Ajay")
+hashMap.put(3,"Vijay")
+hashMap.put(4,"Praveen")
+hashMap.put(2,"Ajay")
+println(".....traversing hashmap.......")
+for(key in hashMap.keys){
+println("Element at key $key = ${hashMap[key]}")
+}}
+hashMap.replace(3,"Ashu") // to replace value at no 3
+hashMap.put(2,"Raj") // to add new value at number
+3
+println(hashMap.containsKey(3))
+hashMap.clear()

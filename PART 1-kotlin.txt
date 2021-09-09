@@ -239,8 +239,7 @@ obj.printMe() // calling method on object
 Nested Class -> class within a class
 ------------------------------------------------
 fun main(args: Array<String>) {
-  val demo = Outer.Nested().foo() // calling nested class
-    method
+  val demo = Outer.Nested().foo() // calling nested class method
     print(demo)
 }
 
@@ -249,16 +248,20 @@ class Outer {
     fun foo() = "Welcome to The TutorialsPoint.com"
   }
 }
+
 Output: Welcome to The TutorialsPoint.com
+----------------------------
 User Defined data Classes
+---------------------------
+
 data class Person(val firstName: String, val age: Int) {}
 data class Person(var firstName: String, var age: Int) {}
-Here data means that it is a data class and we do not need
-to make setter and getter for this class just with data
-keyword it creates automatically setter and getter
+Here data means that it is a data class and we do not need to make setter and getter for this class just with data keyword it creates automatically setter and getter
+
 Code:
 data class UserDetail(val username: String,val age: age)
 How to use:
+
 var obj = UserDetail("android",120);
 Obj.username; //android
 obj.age; // 120
@@ -316,119 +319,128 @@ fun main(args: Array<String>) {
 ----------
 Interface:
 ----------
-An Interface in Kotlin programming language is defined as
-A Java interface contains default and abstract methods. A
-class can implement multiple interfaces. In Kotlin, interfaces
-are declared using the open keyword.
+An interface contains default and abstract methods. A class can implement multiple interfaces. In Kotlin, interfaces are declared using the open keyword.
 interface ExampleInterface {
-    var myVar: String
-    // abstract property
-    fun absMethod()
-    // abstract method
+    var myVar: String // abstract property
+    fun absMethod()  // abstract method
     fun sayHello() = "Hello there" // method with default implementation
-}interface ExampleInterface {
-var myVar: Int
-// abstract property
-fun absMethod():String
-// abstract method
-fun hello() {
-println("Hello there, Welcome to TutorialsPoint.Com!")
 }
+
+interface ExampleInterface {
+  var myVar: Int // abstract property
+  fun absMethod():String // abstract method
+  fun hello() {
+    println("Hello there, Welcome to TutorialsPoint.Com!")
+  }
 }
+
 class InterfaceImp : ExampleInterface {
-override var myVar: Int = 25
-override fun absMethod() = "Happy Learning "
+  override var myVar: Int = 25
+  override fun absMethod() = "Happy Learning "
 }
+
 fun main(args: Array<String>) {
-val obj = InterfaceImp()
-println("My Variable Value is = ${obj.myVar}")
-print("Calling hello(): ")
-obj.hello()
-print("Message from the Website-- ")
-println(obj.absMethod())
+  val obj = InterfaceImp()
+  println("My Variable Value is = ${obj.myVar}")
+  print("Calling hello(): ")
+  obj.hello()
+  print("Message from the Website-- ")
+  println(obj.absMethod())
 }
+
 Two Interface implemeting:
 -------------------------
 interface A {
-fun printMe() {
-println(" method of interface A")
+  fun printMe() {
+  println(" method of interface A")
+  }
 }
-}
-interface B {fun printMeToo() {
-println("I am another Method from interface B")
-}
-}
-// implements two interfaces A and B
-class multipleInterfaceExample: A, B
-fun main(args: Array<String>) {
-val obj = multipleInterfaceExample()
-obj.printMe()
-obj.printMeToo()
-}
-interface ExampleInterface {
-var myVar: Int
-// abstract property
-fun absMethod():String
-// abstract method
-fun hello() {
-println("Hello there, Welcome to TutorialsPoint.Com!")
-}
-}
-class InterfaceImp : ExampleInterface {
-override var myVar: Int = 25
-override fun absMethod() = "Happy Learning "
-}
-fun main(args: Array<String>) {
-val obj = InterfaceImp()
-println("My Variable Value is = ${obj.myVar}")
-print("Calling hello(): ")obj.hello()
-print("Message from the Website-- ")
-println(obj.absMethod())
-}
-interface A {
-fun printMe() {
-println(" method of interface A")
-}
-}
+
 interface B {
-fun printMeToo() {
-println("I am another Method from interface B")
+  fun printMeToo() {
+    println("I am another Method from interface B")
+  }
 }
+
+// implements two interfaces A and B
+class multipleInterfaceExample: A, B  {
+  fun main(args: Array<String>) {
+    val obj = multipleInterfaceExample()
+    obj.printMe()
+    obj.printMeToo()
+  }
+}
+
+interface ExampleInterface {
+  var myVar: Int // abstract property
+  fun absMethod():String // abstract method
+  fun hello() { 
+    println("Hello there, Welcome to TutorialsPoint.Com!")
+  }
+}
+
+class InterfaceImp : ExampleInterface {
+  override var myVar: Int = 25
+  override fun absMethod() = "Happy Learning "
+}
+
+fun main(args: Array<String>) {
+  val obj = InterfaceImp()
+  println("My Variable Value is = ${obj.myVar}")
+  print("Calling hello(): ")obj.hello()
+  print("Message from the Website-- ")
+  println(obj.absMethod())
+}
+
+interface A {
+  fun printMe() {
+  println(" method of interface A")
+  }
+}
+
+interface B {
+  fun printMeToo() {
+  println("I am another Method from interface B")
+  }
 }
 // implements two interfaces A and B
-class multipleInterfaceExample: A, B
-fun main(args: Array<String>) {
-val obj = multipleInterfaceExample()
-obj.printMe()
-obj.printMeToo()
-}
+class multipleInterfaceExample: A, B {
+  fun main(args: Array<String>) {
+    val obj = multipleInterfaceExample()
+    obj.printMe()
+    obj.printMeToo()
+  }
+  
 9. Null Safety & Generic:Generics:
-fun main(args: Array<String>) {
-var objet = genericsExample<String>("JAVA")
-var objet1 = genericsExample<Int>(10)
+ fun main(args: Array<String>) {
+    var objet = genericsExample<String>("JAVA")
+    var objet1 = genericsExample<Int>(10)
 }
+
 class genericsExample<T>(input:T) {
-init {
-println("I am getting called with the value "+input)
+  init {
+    println("I am getting called with the value "+input)
+  }
 }
-}
+
 fun main(args: Array<String>) {
-var objet1 = genericsExample<Int>(10)
-var object2 = genericsExample<Double>(10.00)
-println(objet1)
-println(object2)
+  var objet1 = genericsExample<Int>(10)
+  var object2 = genericsExample<Double>(10.00)
+  println(objet1)
+  println(object2)
 }
+
 class genericsExample<out T>(input:T) {
-init {
-println("I am getting called with the value "+input)
+  init {
+    println("I am getting called with the value "+input)
+  }
 }
-}
+
+------------
 Null Safety:
-Kotlin types system differentiates between references which
-can hold null (nullable reference) and which cannot hold
-null (non null reference). Normally,types of String are not
-nullable. To make string which holds null value, we have toexplicitly define them by putting a ? behind the String as:
-String?
+-------------
+Kotlin types system differentiates between references which can hold null (nullable reference) and which cannot hold null (non null reference). Normally,types of String are not nullable. To make string which holds null value, we have toexplicitly define them by putting a ? behind the String as: String?
+
 var str1: String? = "hello"
 str1 = null // ok
 Smart cast to avoid NullPointerException:
@@ -438,48 +450,58 @@ print(string.length) // Compile error
 fun main(args: Array<String>){
 var string: String? = "Hello!"
 if(string != null) { // smart cast
-print(string.length) // It works now!
+    print(string.length) // It works now!
+  }
 }
-}
+
 Use of is for smart cast
 fun main(args: Array<String>){
-val obj: Any = "The variable obj is automatically cast to
-a String in this scope"
-if(obj is String) {
-// No Explicit Casting needed.
-println("String length is ${obj.length}")
+  val obj: Any = "The variable obj is automatically cast to a String in this scope"
+  if(obj is String) { // No Explicit Casting needed.
+    println("String length is ${obj.length}")
+  }
 }
-}Use of !is for smart cast
+Use of !is for smart cast
+
 fun main(args: Array<String>){
-val obj: Any = "The variable obj is automatically cast to
-a String in this scope"
-if(obj !is String) {
-println("obj is not string")
-} else
-// No Explicit Casting needed.
-println("String length is ${obj.length}")
+  val obj: Any = "The variable obj is automatically cast to a String in this scope"
+  if(obj !is String) {
+    println("obj is not string")
+  } else {
+    // No Explicit Casting needed.
+    println("String length is ${obj.length}")
+  }
 }
+
+------------------------------------
 Exception Handling / Error Handling:
+------------------------------------
 Code:
 fun main(args: Array<String>) {
 try {
-val myVar:Int = 12;
-val v:String = "Tutorialspoint.com";
-v.toInt();
-} catch(e:Exception) {
-e.printStackTrace();
-} finally {
-println("Exception Handling in Kotlin");
+    val myVar:Int = 12;
+    val v:String = "Tutorialspoint.com";
+    v.toInt();
+ } catch(e:Exception) {
+    e.printStackTrace();
+  } finally {
+    println("Exception Handling in Kotlin");
+  }
 }
-}10. Array
+
+-----------
+10. Array
+-----------
 Fixed in size
 intArray -> array of Integer class
 arrayOf(),
 arrayOf<Int>(),
 arrayOf<String>(),
 intArrayOf()
+
 var numbers: IntArray = intArrayOf(1, 2, 3, 4, 5) // intArray
-System.out.println.println("Value at 3rd position : " +
+
+println("Value at 3rd position : " +
 numbers[2]) // Value at 3rd position : 3
 var myArray1 = arrayOf(1,10,4,6,15)
 var myArray2 = arrayOf<Int>(1,10,4,6,15)
@@ -487,45 +509,38 @@ val myArray3 =
 arrayOf<String>("Ajay","Prakesh","Michel","John","Sumit")
 var myArray4= arrayOf(1,10,4, "Ajay","Prakesh")
 fun main(args: Array<String>) {
-val array1 = arrayOf(1,2,3,4)
-val array2 = arrayOf<Long>(11,12,13,14)
-println(array1.get(0))
-println(array1[2])
-println()
-println(array2.get(2))
-println(array2[3])
-}11. Collection
-Array size is fixed whereas collection size is dynamically
-increased or decreased that is why it is used everywhere
-most.
+  val array1 = arrayOf(1,2,3,4)
+  val array2 = arrayOf<Long>(11,12,13,14)
+  println(array1.get(0))
+  println(array1[2])
+  println()
+  println(array2.get(2))
+  println(array2[3])
+}
+---------------
+11. Collection
+---------------
+Array size is fixed whereas collection size is dynamically increased or decreased that is why it is used everywhere most.
 Immutable-> we can read and we cannot add or delete in it
 mutable -> we can read and write on it , both functionality is
 provided.
 List
 -----
 Methods are:
-The ArrayList class provides both read and write
-functionalities.
-add(element: E): Boolean -> It is used to add the specific
-element into the collection.
-add(index: Int, element: E) It is used to insert an element
-at specific index.
-get(index: Int): E It is used to return the element at
-specified index in the list.
-set(index: Int, element: E): E It is used to replace the
-element from the specified position from the current list with
-the specified element.
-removeAt(index: Int): E It is used to remove the specific
-index element from the list.
-toArray(): Array<Any?> It is used to return a new array
-of type Array<Any?> with the elements of this collection.clear() -> clear() It is used to remove all elements from
-the collection.
-toString(): String It is used to return a string
-representation of the object.
+The ArrayList class provides both read and write functionalities.
+add(element: E): Boolean -> It is used to add the specific element into the collection.
+add(index: Int, element: E) It is used to insert an element at specific index.
+get(index: Int): E It is used to return the element at specified index in the list.
+set(index: Int, element: E): E It is used to replace the element from the specified position from the current list with the specified element.
+removeAt(index: Int): E It is used to remove the specific index element from the list.
+toArray(): Array<Any?> It is used to return a new array of type Array<Any?> with the elements of this collection.clear() -> clear() It is used to remove all elements from the collection.
+toString(): String It is used to return a string representation of the object.
+
 .get() -> add
 .set()-> edit value
 .clear() -> clear
 .removeAt() -> remove from specific position
+
 Example:
 val arrayList = ArrayList<String>()//Creating an empty
 arraylist
@@ -535,21 +550,21 @@ arrayList.add("Prakash")
 arrayList.add("Rohan")
 arrayList.add("Vijay")
 arrayList.set(2,"Ashu") // setting value
-println(arrayList.indexOf("Vijay")) // get index of
-arraylist
+println(arrayList.indexOf("Vijay")) // get index of arraylist
 arrayList.removeAt(3) // remove 3 index
 arrayList.clear() // to clear arraylist
 println(".......print ArrayList.......")
+
 for (i in arrayList) {
-println(i)
-}HashMap:
+  println(i)
+}
+
+HashMap:
 -------------
 clear() -> remove all values
-remove(key: K): V? -> remove keys with corrosponding
-values.
+remove(key: K): V? -> remove keys with corrosponding values.
 get(key: K): V? -> returns value related to key
-put(key: K, value: V): V? -> It puts the specified key and
-value in the map
+put(key: K, value: V): V? -> It puts the specified key and value in the map
 Code:
 val hashMap:HashMap<Int,String> =
 HashMap<Int,String>() //define empty hashmap
@@ -558,11 +573,12 @@ hashMap.put(3,"Vijay")
 hashMap.put(4,"Praveen")
 hashMap.put(2,"Ajay")
 println(".....traversing hashmap.......")
+
 for(key in hashMap.keys){
-println("Element at key $key = ${hashMap[key]}")
-}}
+  println("Element at key $key = ${hashMap[key]}")
+}
+
 hashMap.replace(3,"Ashu") // to replace value at no 3
-hashMap.put(2,"Raj") // to add new value at number
-3
+hashMap.put(2,"Raj") // to add new value at number 3
 println(hashMap.containsKey(3))
 hashMap.clear()
